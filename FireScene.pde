@@ -1,8 +1,8 @@
-class HikingScene extends BaseScene
+class FireScene extends BaseScene
 {
-  HikingScene()
+  FireScene()
   {
-   backgroundImage = loadImage("hiking.jpg"); 
+   backgroundImage = loadImage("fire.jpg");
   }
   
   void draw(){

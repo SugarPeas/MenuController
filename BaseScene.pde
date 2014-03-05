@@ -5,19 +5,18 @@ boolean sketchFullScreen() {
 
 class BaseScene{
   
- color clearColor;
+ PImage backgroundImage;
   
  BaseScene(){
    size(displayWidth,displayHeight);
-   clearColor = color(255);
  }
 
   void draw(){
-    background(clearColor);
+    image(backgroundImage,0,0,width,height);
   }
   
-  void keyPress(){
-    setScene(1); 
+  void mousePress() {
+    setScene(0);
   }
 
 }

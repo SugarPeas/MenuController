@@ -1,10 +1,11 @@
-BaseScene[] scenes = new BaseScene[2];
+BaseScene[] scenes = new BaseScene[3];
 int currentScene = 0;
 
 void setup()
 {
  scenes[0] = new MenuScene();
  scenes[1] = new HikingScene(); 
+ scenes[2] = new FireScene();
 }
 
 void draw()
@@ -12,9 +13,10 @@ void draw()
  scenes[currentScene].draw(); 
 }
 
-void keyPressed()
+
+void mousePressed()
 {
-   scenes[currentScene].keyPress();
+   scenes[currentScene].mousePress();
 }
 
 void setScene(int id)

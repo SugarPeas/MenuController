@@ -1,15 +1,23 @@
- class MenuScene extends BaseScene
+class MenuScene extends BaseScene
 {
+  PImage hikingMarker;
+  PImage fireMarker;
+  boolean hike = false;
   MenuScene()
   {
-   clearColor = color(51, 51, 51); 
+   backgroundImage = loadImage("campsite.jpg");
+   hikingMarker = loadImage("hikingMarker.png");
+   fireMarker = loadImage("fireMarker.png");
   }
   
   void draw(){
     super.draw();
+    image(hikingMarker,300,400);
+    image(fireMarker, 620, 400);
+  
   }
   
-  void keyPress(){
-    setScene(1); 
+  void mousePress(){
+    setScene(2); 
   }
 }
