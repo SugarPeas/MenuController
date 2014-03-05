@@ -1,12 +1,11 @@
+
 //This file is for properties/functionality all scenes have
 boolean sketchFullScreen() {
   return true;
 }
 
 class BaseScene{
-  
  PImage backgroundImage;
-  
  BaseScene(){
    size(displayWidth,displayHeight);
  }

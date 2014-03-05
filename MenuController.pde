@@ -1,4 +1,4 @@
-BaseScene[] scenes = new BaseScene[3];
+BaseScene[] scenes = new BaseScene[4];
 int currentScene = 0;
 
 void setup()
@@ -6,6 +6,7 @@ void setup()
  scenes[0] = new MenuScene();
  scenes[1] = new HikingScene(); 
  scenes[2] = new FireScene();
+ scenes[3] = new StarScene();
 }
 
 void draw()

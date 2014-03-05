@@ -11,6 +11,6 @@ class FireScene extends BaseScene
   
   
  void mousePress() {
-    setScene(0);
+    setScene(3);
   }
 }
