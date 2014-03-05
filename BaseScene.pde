@@ -6,6 +6,8 @@ boolean sketchFullScreen() {
 
 class BaseScene{
  PImage backgroundImage;
+ String portName = Serial.list()[2]; //change the 0 to a 1 or 2 etc. to match your port
+
  BaseScene(){
    size(displayWidth,displayHeight);
  }
