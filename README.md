@@ -1,7 +1,7 @@
 Wanderlust
 =============
 
-Wuaderlust is a project being developed for the New Media Team Project at the Rochester Institute of Technology. If you'd like to learn more about the project please see our [development blog](http://sugarpeas.cias.rit.edu/#home).
+Wanderlust is a project being developed for the New Media Team Project at the Rochester Institute of Technology. If you'd like to learn more about the project please see our [development blog](http://sugarpeas.cias.rit.edu/#home).
 
 #Who We Are
 
