@@ -1,7 +1,7 @@
-WunderLust
+Wanderlust
 =============
 
-WunderLust is a project being developed for the New Media Team Project at the Rocehster Institute of Technology. If you'd like to learn more about the project please see our [presentation](http://lancealaughlin.com/WunderLust/Presentation.pdf)
+Wuaderlust is a project being developed for the New Media Team Project at the Rochester Institute of Technology. If you'd like to learn more about the project please see our [development blog](http://sugarpeas.cias.rit.edu/#home).
 
 #Who We Are
 
