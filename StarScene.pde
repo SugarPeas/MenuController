@@ -12,8 +12,8 @@ class StarScene extends BaseScene
   void draw(){
     //super.draw();
     image(backgroundImage,x,y);
-      if(myPort.available() > 0){  
-          val = myPort.readStringUntil('\n').trim();
+      if(myPort2.available() > 0){  
+          val = myPort2.readStringUntil('\n').trim();
           if( val.trim().equals("Up") ){
                if (y != 0){
                   y+=2;
