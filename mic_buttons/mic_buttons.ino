@@ -14,9 +14,10 @@
 
 //Button variables
 boolean fireSparked = false;
-int numStrikes = 0; //will store how many times the user has striked the flint (pushed the button)
-long previousMillis = 0; //will store last time button was checked
-long interval = 100; //how long to wait before checking button again
+int numStrikes = 0; //will store how many times the user has striked the flint (pressed the button)
+int numSparks = 5; //number of times user will have to strike the flint
+int buttonState = 0; //will store current button state
+int lastButtonState = 0; //will store previous button state
 
 //Microphone variables
 boolean finishedBlowing = false;
@@ -31,18 +32,22 @@ void setup() {
 
 void loop() {
   
-  //is it time to check the button?
-  unsigned long currentMillis = millis();
-  if(currentMillis - previousMillis > interval) {
+  //get button state
+  buttonState = Esplora.readButton(SWITCH_DOWN);
+  
+  //if button state has changed
+  if(buttonState != lastButtonState){
     
-    previousMillis = currentMillis; // save the last time you checked the button
-    
-    //if fire hasn't sparked
-    if(!fireSparked){
-      buttonFlint(); //check for button press
+    //trigger button press on release
+    //prevents long holds from being read as multiple button presses
+    if(buttonState == HIGH && numStrikes <= numSparks){
+      buttonFlint();
     }
     
   }
+  
+  //save current state as last state for next time through the loop
+  lastButtonState = buttonState;
   
   //if spark was created...
   if(fireSparked){
@@ -55,35 +60,27 @@ void loop() {
       }
       else{ 
         finishedBlowing = true; //finished!
-        Serial.println("fire");
+        Serial.println("fire"); //send message to processing
         Esplora.writeRGB(0, 0, 0); //led off
       }
       
-    }//end if !finishedBlowing
-    
-  } //end if buttonPressed
-    
-  
-  
-     
-}
-
-void buttonFlint(){
-  int button = Esplora.readButton(SWITCH_DOWN);
-  
-  //if button was pressed
-  if(button == LOW){
-    
-    Serial.println("spark");
-    
-    //increase number of times flint has been striked
-    numStrikes++;
-    
-    if(numStrikes == 5){
-      fireSparked = true;
-    }    
+    }
     
   }
+     
+}//end loop()
+
+void buttonFlint(){
+  
+  Serial.println("spark"); //send message to processing
+  
+  //fire sparked, user can start blowing
+  if(numStrikes == numSparks){
+    fireSparked = true;
+  }   
+   
+  //increase number of times flint has been striked
+  numStrikes++; 
   
 } //end buttonFlint()
 
@@ -97,6 +94,8 @@ void micFire(){
     
     // increase duration
     duration++;
+    
+    Serial.println("blowing");
     
     //determine LED color based on duration
     if(duration < blowUntil*.25){

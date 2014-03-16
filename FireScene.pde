@@ -1,40 +1,45 @@
 class FireScene extends BaseScene
 {
-  PFont f;
+  //animatics
+  PImage sparkImage;
+  PImage blowingImage;
+  PImage fireImage;
+  
   boolean startFire = false;
   
   FireScene()
   {
-    backgroundImage = loadImage("fire.jpg");
-    
-    f = createFont("Arial",36,true); // Arial, 36 point, anti-aliasing on
+    //load images
+    backgroundImage = loadImage("CampFire_02.jpg");
+    sparkImage = loadImage("CampFire_03.jpg");
+    blowingImage = loadImage("CampFire_04.jpg");
+    fireImage = loadImage("CampFire_05.jpg");    
   }
   
   void draw(){
     super.draw();
-        
+    
+    //fire is started
+    if(startFire){
+       image(fireImage,0,0,width,height);
+    }
     // If data is available, read it and store it in val
-    if(myPort.available() > 0){  
+    else if(myPort.available() > 0){  
       val = myPort.readStringUntil('\n');  
       
       //if user striked the flint
-      if(val.trim().equals("spark")){         
-        textFont(f);
-        fill(#FFFFFF);
-        text("Spark",100,100); 
-        
-        delay(200);
+      if(val.trim().equals("spark")){          
+        image(sparkImage,0,0,width,height);
+      }
+      //if user is done blowing
+      else if(val.trim().equals("blowing")){ 
+        image(blowingImage,0,0,width,height);
       }
       //if user is done blowing
       else if(val.trim().equals("fire")){ 
         startFire = true; //start the fire
       }
-    }
-    
-    if(startFire){
-      textFont(f);
-      fill(#FFFFFF);
-      text("Start the Fire",100,100); 
+      
     }
     
   }
