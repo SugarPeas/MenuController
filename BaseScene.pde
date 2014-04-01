@@ -1,8 +1,9 @@
-
 //This file is for properties/functionality all scenes have
 boolean sketchFullScreen() {
   return true;
 }
+
+String val; //Stores serial messages from arduino
 
 class BaseScene{
  PImage backgroundImage;

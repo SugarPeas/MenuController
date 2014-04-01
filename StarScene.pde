@@ -1,6 +1,5 @@
 int x = 0;
 int y = -150;
-String val;
 
 class StarScene extends BaseScene
 {
@@ -10,20 +9,28 @@ class StarScene extends BaseScene
   }
   
   void draw(){
-    //super.draw();
+    super.draw();
+    
     image(backgroundImage,x,y);
-      if(myPort2.available() > 0){  
-          val = myPort2.readStringUntil('\n').trim();
-          if( val.trim().equals("Up") ){
-               if (y != 0){
-                  y+=2;
-               }
-          }else if(val.trim().equals("Down")){
-            if(y != backgroundImage.height){
-               y-=2; 
-            }
+    
+    if(myPort2.available() > 0){  
+      
+        val = myPort2.readStringUntil('\n');
+        println(val);
+        if( val.trim().equals("Down") ){
+          
+             if (y < 0){
+                y+=5;
+             }
+             
+        }else if( val.trim().equals("Up") ){
+          
+          if(y + backgroundImage.height > displayHeight){
+             y-=5; 
           }
-      }
+          
+        }
+    }
   }
   
   

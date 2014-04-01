@@ -1,10 +1,12 @@
 /* 
- This  sketch reads  the microphone sensor. The microphone
- will range from 0 (total silence) to 1023 (really loud). 
- The LED will be lit a yellow/orange/red (to simulate flickering fire).  
+ This  sketch reads accelerometer and uses it to update the image position in Processing.  
  */
 
 #include <Esplora.h>
+
+long previousTime = 0; // last time we checked
+unsigned long currentTime; // current time
+long interval = 50; // interval at which to check - might need to play around with this
 
 void setup() {
   // initialize the serial communication:
@@ -12,17 +14,26 @@ void setup() {
 }
 
 void loop() {
- 
-     int x_axis = Esplora.readAccelerometer(X_AXIS);
-      /*Serial.print("x: ");
- Serial.print(x_axis);*/
+  
+  // get the current time
+  currentTime = millis();
+  
+  // if the difference between the current time and the last time we checked is bigger than the interval...
+  if(currentTime - previousTime > interval) {
+    
+    int x_axis = Esplora.readAccelerometer(X_AXIS);
      
      if(x_axis > 50){
        Serial.println("Up");
-     }else if(x_axis < 0){
+     }
+     else if(x_axis < 0){
        Serial.println("Down");
      }
-     
-      delay(50);
+    
+    // update previousTime
+    previousTime = currentTime;
+   
+  }
+       
 }
 
