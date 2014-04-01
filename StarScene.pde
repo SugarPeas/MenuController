@@ -16,19 +16,23 @@ class StarScene extends BaseScene
     if(myPort2.available() > 0){  
       
         val = myPort2.readStringUntil('\n');
-        println(val);
-        if( val.trim().equals("Down") ){
+        
+        if(val != null){
+        
+          if( val.trim().equals("Down") ){
           
              if (y < 0){
                 y+=5;
              }
-             
-        }else if( val.trim().equals("Up") ){
-          
-          if(y + backgroundImage.height > displayHeight){
-             y-=5; 
           }
-          
+          else if( val.trim().equals("Up") ){
+            
+            if(y + backgroundImage.height > displayHeight){
+               y-=5; 
+            }
+            
+          }
+        
         }
     }
   }
