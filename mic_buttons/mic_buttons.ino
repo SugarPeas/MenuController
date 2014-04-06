@@ -27,7 +27,7 @@ int duration = 0;  // how long the user has been blowing
 // Used to prevent serial port overload
 long previousTime = 0; // last time we checked
 unsigned long currentTime; // current time
-long interval = 60; // interval at which to check
+long interval = 55; // interval at which to check
 
 
 void setup() {

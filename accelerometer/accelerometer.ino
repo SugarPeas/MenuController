@@ -6,7 +6,7 @@
 
 long previousTime = 0; // last time we checked
 unsigned long currentTime; // current time
-long interval = 50; // interval at which to check - might need to play around with this
+long interval = 40; // interval at which to check - might need to play around with this
 
 void setup() {
   // initialize the serial communication:
