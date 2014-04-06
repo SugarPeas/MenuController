@@ -15,7 +15,7 @@ class StarScene extends BaseScene
     
     if(myPort2.available() > 0){  
       
-        val = myPort2.readStringUntil('\n');
+        val = myPort2.readString();
         
         if(val != null){
         

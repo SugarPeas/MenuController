@@ -11,6 +11,8 @@ void setup()
 {
  myPort = new Serial(this, portFire, 9600);
  myPort2 = new Serial(this, portAccel, 9600);
+ myPort.bufferUntil('\n');
+ myPort2.bufferUntil('\n');
 
  scenes[0] = new HikingScene(); 
  scenes[1] = new FireScene();
