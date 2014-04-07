@@ -2,7 +2,9 @@ class ClimbingScene extends BaseScene
 {
   PImage climbImage;
   
-  ClimbingScene(){
+  ClimbingScene(PApplet pa)
+  {
+    super(pa);
     backgroundImage = loadImage("Climb_01.jpg");
     climbImage = loadImage("Climb_02.jpg");
   }

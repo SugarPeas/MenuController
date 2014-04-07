@@ -1,7 +1,8 @@
 class HikingScene extends BaseScene
 {
-  HikingScene()
+  HikingScene(PApplet pa)
   {
+    super(pa);
    backgroundImage = loadImage("hiking.jpg"); 
   }
   
@@ -11,6 +12,6 @@ class HikingScene extends BaseScene
   
   
  void mousePress() {
-    setScene(1);
+    setScene(0);
   }
 }

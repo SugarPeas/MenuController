@@ -3,8 +3,9 @@ int y = -150;
 
 class StarScene extends BaseScene
 {
-  StarScene()
+  StarScene(PApplet pa)
   {
+    super(pa);
     backgroundImage = loadImage("stars.jpg");
   }
   

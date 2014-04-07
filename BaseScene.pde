@@ -10,9 +10,16 @@ class BaseScene{
  PImage backgroundImage;
  String portName = Serial.list()[2]; //change the 0 to a 1 or 2 etc. to match your port
 
- BaseScene(){
-   size(displayWidth,displayHeight);
+ PApplet parent;
+
+ BaseScene(PApplet pa){
    font = createFont("Arial Bold",48);
+   parent = pa;
+ }
+ 
+ void begin()
+ {
+   
  }
 
   void draw(){
