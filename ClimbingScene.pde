@@ -35,6 +35,6 @@ class ClimbingScene extends BaseScene
   
   
  void mousePress() {
-    setScene(2);
+    setScene(3);
   }
 }

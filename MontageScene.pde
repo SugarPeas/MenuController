@@ -21,4 +21,8 @@ class MontageScene extends BaseScene{
     image(myMovie, 0, 0);
   }
   
+   void mousePress() {
+    setScene(1);
+  }
+  
 }
