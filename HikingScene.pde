@@ -11,6 +11,6 @@ class HikingScene extends BaseScene
   
   
  void mousePress() {
-    setScene(0);
+    setScene(1);
   }
 }
