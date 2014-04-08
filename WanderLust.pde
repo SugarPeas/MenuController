@@ -15,15 +15,15 @@ void setup()
   frameRate(30);
    size(displayWidth,displayHeight);
  myPort = new Serial(this, portFire, 9600);
- myPort2 = new Serial(this, portAccel, 9600);
+ //myPort2 = new Serial(this, portAccel, 9600);
  
  myPort.bufferUntil('\n');
- myPort2.bufferUntil('\n');
+ //myPort2.bufferUntil('\n');
 
  scenes[0] = new MontageScene(this);
  scenes[1] = new HikingScene(this); 
  scenes[2] = new ClimbingScene(this);
- scenes[3] = new StarScene(this);
+ scenes[3] = new PanoScene(this);
  
  scenes[0].begin();
 }

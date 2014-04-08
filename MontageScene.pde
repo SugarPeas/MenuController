@@ -11,7 +11,7 @@ class MontageScene extends BaseScene{
   
   void begin()
   {
-    myMovie = new Movie(parent, "foothills.mov");
+    myMovie = new Movie(parent, "introMontage.mp4");
     myMovie.loop();
   }
   
