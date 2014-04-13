@@ -1,5 +1,3 @@
-import processing.video.*;
-
 class MontageScene extends BaseScene{
 
   Movie myMovie;
