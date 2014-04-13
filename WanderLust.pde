@@ -1,10 +1,11 @@
 import processing.serial.*;
 import processing.video.*;
 
-Serial myPort;  // Create object from Serial class
+// Create object from Serial class
+Serial myPort;  
 Serial myPort2;
 
-String portFire = Serial.list()[2]; //change the 0 to a 1 or 2 etc. to match your port
+String portClimb = Serial.list()[2]; //change the 0 to a 1 or 2 etc. to match your port
 String portAccel = Serial.list()[3];
 
 BaseScene[] scenes = new BaseScene[4];
@@ -14,7 +15,7 @@ void setup()
 {
  frameRate(30);
  size(displayWidth,displayHeight);
- myPort = new Serial(this, portFire, 9600);
+ myPort = new Serial(this, portClimb, 9600);
  myPort2 = new Serial(this, portAccel, 9600);
  
  myPort.bufferUntil('\n');
@@ -32,7 +33,6 @@ void draw()
 {
  scenes[currentScene].draw(); 
 }
-
 
 void mousePressed()
 {
