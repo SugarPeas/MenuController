@@ -16,12 +16,11 @@ class MontageScene extends BaseScene{
   }
   
   void draw(){
-    //super.draw();
-    //tint(255, 20);
     image(myMovie, 0, 0);
   }
   
-   void mousePress() {
+  void mousePress() {
+    myMovie.stop();
     setScene(1);
   }
   
