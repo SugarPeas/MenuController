@@ -12,8 +12,8 @@ int currentScene = 0;
 
 void setup()
 {
-  frameRate(30);
-   size(displayWidth,displayHeight);
+ frameRate(30);
+ size(displayWidth,displayHeight);
  myPort = new Serial(this, portFire, 9600);
  myPort2 = new Serial(this, portAccel, 9600);
  
@@ -42,10 +42,7 @@ void mousePressed()
 void setScene(int id)
 {
  currentScene = id;
- if(id == 0)
- {
-  scenes[id].begin(); 
- }
+ scenes[id].begin(); 
 }
 
 void movieEvent(Movie m) {
