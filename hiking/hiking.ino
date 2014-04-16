@@ -18,7 +18,7 @@ void loop() {
   if (sensorReading <= threshold) {
     // toggle the status of the ledPin:        
     // send the string "Knock!" back to the computer, followed by newline
-    Serial.println("Knock!");        
+    Serial.println("walk");        
   }
   delay(100);  // delay to avoid overloading the serial port buffer
 }
