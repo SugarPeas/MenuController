@@ -4,8 +4,9 @@ class ClimbingScene extends BaseScene{
   
   //define video keyframes
   int currentKey = 0;
-  float[] startKeys = { 00.0, 15.0, 19.0, 23.0, 30.0, 52.0, 58.0, 65.0, 85.0, 094.0, 136.0, 144.0, 154.0, 158.0 };
-  float[] endKeys =   { 15.0, 19.0, 23.0, 30.0, 52.0, 58.0, 65.0, 85.0, 94.0, 136.0, 144.0, 154.0, 158.0, 176.727 };
+  float[] startKeys = { 00.00, 14.00, 20.15, 42.00, 47.00, 56.00, 58.25, 71.01, 73.05 };
+  float[] endKeys   = { 14.00, 20.15, 42.00, 47.00, 56.00, 58.25, 71.01, 73.05, 85.09854 };
+  //      sections  =   start  loop   climb  loop   climb  loop   climb  loop   end
   
   
   ClimbingScene(PApplet pa){
@@ -20,7 +21,7 @@ class ClimbingScene extends BaseScene{
   
   //loop
   void draw(){
-     
+    
     //if video is between keyframes...
     if( climbMovie.time() >= startKeys[currentKey] && climbMovie.time() < endKeys[currentKey] ){
       
