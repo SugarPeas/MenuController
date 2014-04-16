@@ -6,7 +6,7 @@ class ClimbingScene extends BaseScene{
   int currentKey = 0;
   float[] startKeys = { 00.00, 14.00, 20.15, 42.00, 47.00, 56.00, 58.25, 71.01, 73.05 };
   float[] endKeys   = { 14.00, 20.15, 42.00, 47.00, 56.00, 58.25, 71.01, 73.05, 85.09854 };
-  //      sections  =   start  loop   climb  loop   climb  loop   climb  loop   end
+  //video sections  =   start  loop   climb  loop   climb  loop   climb  loop   end
   
   
   ClimbingScene(PApplet pa){
@@ -17,27 +17,48 @@ class ClimbingScene extends BaseScene{
   //setup
   void begin(){
     climbMovie = new Movie(parent, "climbing.mp4");
+    climbMovie.play();
   }
   
   //loop
   void draw(){
+        
+    //if current key is even
+    if( currentKey % 2 == 0 || currentKey == 0){
+            
+      //if video is between keyframes...
+      if( climbMovie.time() >= startKeys[currentKey] && climbMovie.time() < endKeys[currentKey] ){
+                
+        //keep playing
+        climbMovie.play();
+        image(climbMovie, 0, 0);
+        
+      }
+      //if reached end of video
+      else if(climbMovie.time() == climbMovie.duration()){
+        mousePress(); //go to next scene
+      }
+      //if reached end of video section, trigger loop
+      else{
+        nextKey();
+      }
+      
+    }
     
-    //if video is between keyframes...
-    if( climbMovie.time() >= startKeys[currentKey] && climbMovie.time() < endKeys[currentKey] ){
-      
-      //keep playing
-      climbMovie.play();
-      image(climbMovie, 0, 0);
-      
-    }
-    //if reached end of video, 
-    else if(climbMovie.time() == climbMovie.duration()){
-      mousePress(); //go to next scene
-    }
-    //if reached end of current section...
+    //if current key is odd
     else{
-      climbMovie.pause();
       
+      //if reached end of section, play video in reverse
+      if( climbMovie.time() > endKeys[currentKey] ){
+        climbMovie.speed(-1.0);        
+      }
+      //if reached beginning of section, play video forward again
+      else if( climbMovie.time() < startKeys[currentKey] ){
+        climbMovie.speed(1.0);        
+      }
+      
+      image(climbMovie, 0, 0);
+          
       //wait for user to trigger next section
       //if data is available...
       if(myPort.available() > 0){  
@@ -47,10 +68,13 @@ class ClimbingScene extends BaseScene{
         if(val != null){
           
           //if rotary encoder is turning, trigger climbing action
-          if(val.trim().equals("climb")){ climb(); }
+          if(val.trim().equals("climb")){ 
+            nextKey(); 
+            climbMovie.speed(1.0);
+          }
         
         }//end if 
-      } //end if
+      }//end if
       
     }//end else
     
@@ -59,7 +83,7 @@ class ClimbingScene extends BaseScene{
  
 
  //triggers next section of video
- void climb(){
+ void nextKey(){
   
    //update current keyframe, if more exist   
    if(startKeys.length > currentKey+1){
