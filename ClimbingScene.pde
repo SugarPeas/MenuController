@@ -1,6 +1,11 @@
+import jmcvideo.*;
+import processing.opengl.*;
+import gifAnimation.*;
+
 class ClimbingScene extends BaseScene{
     
-  Movie climbMovie;
+  JMCMovie climbMovie;
+  //Gif climbAnimation;
   
   //define video keyframes
   int currentKey = 0;
@@ -16,18 +21,25 @@ class ClimbingScene extends BaseScene{
   
   //setup
   void begin(){
-    climbMovie = new Movie(parent, "climbing.mp4");
+    climbMovie = new JMCMovie(parent, "climbing.mov", RGB);
     climbMovie.play();
+    
+//    climbAnimation = new Gif(parent, "climbing.gif");
+//    climbAnimation.setTransparent(255, 255, 255);
+//    climbAnimation.setDelay(5);
+//    climbAnimation.play();
   }
   
   //loop
   void draw(){
+    
+    //image(climbAnimation, 100,100);
         
     //if current key is even
     if( currentKey % 2 == 0 || currentKey == 0){
             
       //if video is between keyframes...
-      if( climbMovie.time() >= startKeys[currentKey] && climbMovie.time() < endKeys[currentKey] ){
+      if( climbMovie.getCurrentTime() >= startKeys[currentKey] && climbMovie.getCurrentTime() < endKeys[currentKey] ){
                 
         //keep playing
         climbMovie.play();
@@ -35,7 +47,7 @@ class ClimbingScene extends BaseScene{
         
       }
       //if reached end of video
-      else if(climbMovie.time() == climbMovie.duration()){
+      else if(climbMovie.getCurrentTime() == climbMovie.getDuration()){
         mousePress(); //go to next scene
       }
       //if reached end of video section, trigger loop
@@ -49,12 +61,11 @@ class ClimbingScene extends BaseScene{
     else{
       
       //if reached end of section, play video in reverse
-      if( climbMovie.time() > endKeys[currentKey] ){
-        climbMovie.speed(-1.0);        
+      if( climbMovie.getCurrentTime() > endKeys[currentKey] ){
+        climbMovie.setRate(-1.0);  
       }
-      //if reached beginning of section, play video forward again
-      else if( climbMovie.time() < startKeys[currentKey] ){
-        climbMovie.speed(1.0);        
+      else if( climbMovie.getCurrentTime() < startKeys[currentKey] ){
+        climbMovie.setRate(1.0);  
       }
       
       image(climbMovie, 0, 0);
@@ -69,8 +80,8 @@ class ClimbingScene extends BaseScene{
           
           //if rotary encoder is turning, trigger climbing action
           if(val.trim().equals("climb")){ 
+            climbMovie.isBouncing = false;            
             nextKey(); 
-            climbMovie.speed(1.0);
           }
         
         }//end if 
