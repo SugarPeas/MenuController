@@ -1,6 +1,6 @@
 import jmcvideo.*;
 import processing.opengl.*;
-//import gifAnimation.*;
+import gifAnimation.*;
 
 class HikingScene extends BaseScene{
     
