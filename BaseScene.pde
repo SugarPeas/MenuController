@@ -66,11 +66,7 @@ void videoPlayback()
             if( myMovie.getCurrentTime() >= instructionStart && myMovie.getCurrentTime() < instructionEnd ){
                 playGIF();
             }
-        }
-        
-        //if reached end of video, go to next scene
-        else if(myMovie.getCurrentTime() == myMovie.getDuration()){ mousePress(); }
-        
+        }        
         //if reached end of video section, trigger loop
         else{ nextKey(); }
     }
@@ -85,23 +81,25 @@ void videoPlayback()
             myMovie.setRate(1.0);  
         }
         
+        //keep looping
         tint(255, 255);
         myMovie.centerImage();  
           
-        //INTERACTION HERE
+        //wait for user interaction to trigger next section
         userInteraction();
     
     }//end else
+    
+    
+    //if reached end of video, go to next scene
+    if(myMovie.getCurrentTime() == myMovie.getDuration()){ mousePress(); }
 }
 
 
 //---------------------------------------- 
 //HANDLES ARDUINO INTERACTION
 //----------------------------------------
-void userInteraction()
-{
-  println("interaction");
-}
+void userInteraction(){ }
 
 
 //---------------------------------------- 
@@ -124,7 +122,7 @@ void playGIF()
   tint(255, transparency); 
   image(gifAnimation[gifFrame], gifX, gifY);
    
-  //update current GIF frame, if more exist
+  //display next GIF frame, if more exist
   if(gifAnimation.length > gifFrame+1){
     gifFrame++; 
   }
