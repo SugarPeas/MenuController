@@ -1,16 +1,14 @@
 import jmcvideo.*;
 import processing.opengl.*;
-import gifAnimation.*;
 
 class HikingScene extends BaseScene{
     
   JMCMovie hikeMovie;
-  //Gif hikeAnimation;
   
   //define video keyframes
   int currentKey = 0;
-  float[] startKeys = { 00.00, 14.00, 20.15, 42.00, 47.00, 56.00, 58.25, 71.01, 73.05 };
-  float[] endKeys   = { 14.00, 20.15, 42.00, 47.00, 56.00, 58.25, 71.01, 73.05, 85.09854 };
+  double[] startKeys = { 00.00, 14.00, 20.15, 42.00, 47.00, 56.00, 58.25, 71.01, 73.05 };
+  double[] endKeys   = { 14.00, 20.15, 42.00, 47.00, 56.00, 58.25, 71.01, 73.05, 85.09854 };
   //video sections  =   start  loop   hike  loop   hike  loop   hike  loop   end
   
   
@@ -23,18 +21,11 @@ class HikingScene extends BaseScene{
   void begin(){
     hikeMovie = new JMCMovie(parent, "climbing.mov", RGB);
     hikeMovie.play();
-    
-//    hikeAnimation = new Gif(parent, "hikeing.gif");
-//    hikeAnimation.setTransparent(255, 255, 255);
-//    hikeAnimation.setDelay(5);
-//    hikeAnimation.play();
   }
   
   //loop
   void draw(){
-    
-    //image(hikeAnimation, 100,100);
-        
+            
     //if current key is even
     if( currentKey % 2 == 0 || currentKey == 0){
             
@@ -61,10 +52,10 @@ class HikingScene extends BaseScene{
     else{
       
       //if reached end of section, play video in reverse
-      if( hikeMovie.getCurrentTime() > endKeys[currentKey] ){
+      if( hikeMovie.getCurrentTime() >= endKeys[currentKey] ){
         hikeMovie.setRate(-1.0);  
       }
-      else if( hikeMovie.getCurrentTime() < startKeys[currentKey] ){
+      else if( hikeMovie.getCurrentTime() <= startKeys[currentKey] ){
         hikeMovie.setRate(1.0);  
       }
       
@@ -102,7 +93,7 @@ class HikingScene extends BaseScene{
  //move to next scene
  void mousePress() {
    hikeMovie.stop();
-   setScene(3);
+   setScene(2);
  }
   
 }
