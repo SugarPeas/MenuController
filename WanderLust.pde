@@ -1,54 +1,82 @@
+//----------------------------------------
+//IMPORT NECESSARY LIBRARIES
+//---------------------------------------- 
 import processing.serial.*;
-import processing.video.*;
+import jmcvideo.*;
+import processing.opengl.*;
+import gifAnimation.*;
 
-// Create object from Serial class
+//----------------------------------------
+//VARIALBLES
+//----------------------------------------
+
+//handles serial port connection / communication
 Serial climbPort;  
 Serial panoPort;
 Serial hikePort;
-
-String portClimb = Serial.list()[2]; //change the 0 to a 1 or 2 etc. to match your port
+String portClimb = Serial.list()[2];
 String portPano = Serial.list()[3];
 String portHike = Serial.list()[2];
 
+//handles various scenes 
 BaseScene[] scenes = new BaseScene[4];
 int currentScene = 0;
 
+//display sketch full screen
+boolean sketchFullScreen() {return true;}
+
+//----------------------------------------
+//SKETCH SETUP
+//----------------------------------------
 void setup()
 {
+ //display settings
  frameRate(30);
  size(displayWidth,displayHeight);
+ 
+ //setup serial port connections - used to communicate with arduino boards
  climbPort = new Serial(this, portClimb, 9600);
  panoPort = new Serial(this, portPano, 9600);
- hikePort = new Serial(this, portHike, 9600);
+ //hikePort = new Serial(this, portHike, 9600);
  
  climbPort.bufferUntil('\n');
  panoPort.bufferUntil('\n');
- hikePort.bufferUntil('\n');
-
+ //hikePort.bufferUntil('\n');
+ 
+ //define the scenes
  scenes[0] = new MontageScene(this);
  scenes[1] = new HikingScene(this); 
  scenes[2] = new ClimbingScene(this);
  scenes[3] = new PanoScene(this);
  
+ //start the first scene - intro montage video
  scenes[0].begin();
 }
 
+
+//----------------------------------------
+//DISPLAYS CURRENT SCENE
+//----------------------------------------
 void draw()
 {
  scenes[currentScene].draw(); 
 }
 
-void mousePressed()
-{
-   scenes[currentScene].mousePress();
-}
 
+//----------------------------------------
+//DISPLAY THE NEXT SCENE
+//----------------------------------------
 void setScene(int id)
 {
  currentScene = id;
  scenes[id].begin(); 
 }
 
-void movieEvent(Movie m) {
-  m.read();
+
+//------------------------------------------
+//HANDLES MOUSE CLICK EVENT
+//------------------------------------------
+void mousePressed()
+{
+  scenes[currentScene].mousePress();
 }
