@@ -14,9 +14,9 @@ class PanoScene extends BaseScene
     
     image(backgroundImage,x,y);
     
-    if(myPort2.available() > 0){  
+    if(panoPort.available() > 0){  
       
-        val = myPort2.readString();
+        val = panoPort.readString();
         
         if(val != null){
         

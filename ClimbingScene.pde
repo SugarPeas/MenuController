@@ -118,10 +118,10 @@ class ClimbingScene extends BaseScene{
           
       //wait for user to trigger next section
       //if data is available...
-      if(myPort.available() > 0){  
+      if(climbPort.available() > 0){  
         
         //store data
-        val = myPort.readStringUntil('\n');      
+        val = climbPort.readStringUntil('\n');      
         if(val != null){
           
           //if rotary encoder is turning, trigger climbing action

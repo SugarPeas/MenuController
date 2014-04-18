@@ -63,10 +63,10 @@ class HikingScene extends BaseScene{
           
       //wait for user to trigger next section
       //if data is available...
-      if(myPort3.available() > 0){  
+      if(hikePort.available() > 0){  
         
         //store data
-        val = myPort3.readStringUntil('\n');      
+        val = hikePort.readStringUntil('\n');      
         if(val != null){
             hikeMovie.isBouncing = false;            
             nextKey(); 
