@@ -3,38 +3,48 @@ import processing.opengl.*;
 import gifAnimation.*;
 
 class ClimbingScene extends BaseScene{
+ 
+  
+ //----------------------------------------
+ //VARIABLES
+ //---------------------------------------- 
+ JMCMovie climbMovie;
+ 
+ //define video keyframes
+ int currentKey = 0;
+ float[] startKeys = { 00.00, 14.00, 20.15, 42.00, 47.00, 56.00, 58.25, 71.01, 73.05 };
+ float[] endKeys   = { 14.00, 20.15, 42.00, 47.00, 56.00, 58.25, 71.01, 73.05, 85.09854 };
+ //video sections  =   start  loop   climb  loop   climb  loop   climb  loop   end
+ 
+ //handles instruction gif animation
+ PImage[] gifAnimation;
+ int gifFrame = 0;
+  
+ 
+ 
+ ClimbingScene(PApplet pa){
+   super(pa);
+ }
+ 
+ 
+  
+ //---------------------------------------- 
+ //SCENE SETUP
+ //----------------------------------------
+ void begin(){
+   climbMovie = new JMCMovie(parent, "climbing.mov", RGB);
+   climbMovie.play();
+  
+   gifAnimation = Gif.getPImages(parent, "climbing.gif");
+ }
+  
+  
+  
+ //---------------------------------------- 
+ //DRAW LOOP
+ //----------------------------------------
+ void draw(){
     
-  JMCMovie climbMovie;
-  //Gif climbAnimation;
-  
-  //define video keyframes
-  int currentKey = 0;
-  float[] startKeys = { 00.00, 14.00, 20.15, 42.00, 47.00, 56.00, 58.25, 71.01, 73.05 };
-  float[] endKeys   = { 14.00, 20.15, 42.00, 47.00, 56.00, 58.25, 71.01, 73.05, 85.09854 };
-  //video sections  =   start  loop   climb  loop   climb  loop   climb  loop   end
-  
-  
-  ClimbingScene(PApplet pa){
-    super(pa);
-  }
-  
-  
-  //setup
-  void begin(){
-    climbMovie = new JMCMovie(parent, "climbing.mov", RGB);
-    climbMovie.play();
-    
-//    climbAnimation = new Gif(parent, "climbing.gif");
-//    climbAnimation.setTransparent(255, 255, 255);
-//    climbAnimation.setDelay(5);
-//    climbAnimation.play();
-  }
-  
-  //loop
-  void draw(){
-    
-    //image(climbAnimation, 100,100);
-        
     //if current key is even
     if( currentKey % 2 == 0 || currentKey == 0){
             
@@ -89,22 +99,52 @@ class ClimbingScene extends BaseScene{
       
     }//end else
     
-    
-  }//end draw()
+     
+  //play instructions gif
+  playGIF();
+  
+  
+ }//end draw()
+ 
  
 
- //triggers next section of video
+ //---------------------------------------- 
+ //TRIGGERS NEXT SECTION OF VIDEO
+ //----------------------------------------
  void nextKey(){
-  
-   //update current keyframe, if more exist   
+
+   //update current video keyframe, if more exist   
    if(startKeys.length > currentKey+1){
      currentKey++; 
+   }
+ 
+ }
+ 
+ 
+ 
+ //---------------------------------------- 
+ //PLAYS ANIMATED GIF FILES
+ //----------------------------------------
+ void playGIF(){
+   
+   //disply current GIF frame
+   image(gifAnimation[gifFrame], 100, 100);
+   
+   //update current GIF frame, if more exist
+   if(gifAnimation.length > gifFrame+1){
+     gifFrame++; 
+   }
+   //animation loops back to the beginning
+   else{
+     gifFrame = 0;
    }
    
  }
  
  
- //move to next scene
+ //---------------------------------------- 
+ //ADVANCE TO NEXT SCENE
+ //----------------------------------------
  void mousePress() {
    climbMovie.stop();
    setScene(3);

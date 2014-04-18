@@ -27,3 +27,4 @@ Wanderlust is a project being developed for the New Media Team Project at the Ro
 
 * [jmcvideo 1.2](http://www.mat.ucsb.edu/~a.forbes/PROCESSING/jmcvideo/jmcvideo.html) - Java Media Components Library for JOGL & Processing
 * [Java.FX 1.2 SDK](http://www.oracle.com/technetwork/java/javasebusiness/downloads/java-archive-downloads-javafx-419431.html#javafx_sdk-1.2.3-oth-JPR)
+* [gifAnimation](http://extrapixel.github.io/gif-animation/) - Processing library to play and export GIF animations
