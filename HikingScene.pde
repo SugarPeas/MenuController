@@ -6,14 +6,14 @@ class HikingScene extends BaseScene{
 //----------------------------------------
 //CONSTRUCTOR
 //----------------------------------------  
-HikingScene(PApplet pa){super(pa);}
+HikingScene(PApplet pa){ super(pa); }
   
   
 //---------------------------------------- 
 //SCENE SETUP
 //----------------------------------------
 void begin()
-{   
+{ 
   //video init and setup
   myMovie = new JMCMovie(parent, "hiking.mov", RGB);
   myMovie.frameImage();
@@ -45,7 +45,7 @@ void begin()
 //DISPLAY THE SCENE
 //----------------------------------------
 void draw()
-{  
+{ 
   videoPlayback(); 
 }
  

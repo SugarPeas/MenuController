@@ -16,7 +16,7 @@ int currentKey;
 double[] startKeys;
 double[] endKeys;
 
-//used to display instruction animation
+//used to display instruction animations
 PImage[] gifAnimation;
 int gifFrame;
 float gifX;
@@ -52,6 +52,8 @@ void draw(){ }
 //----------------------------------------
 void videoPlayback()
 {
+    background(0);
+    
     //if current key is even
     if( currentKey % 2 == 0 || currentKey == 0){
       
@@ -74,13 +76,8 @@ void videoPlayback()
     else{
           
         //if reached end of section, play video in reverse
-        if( myMovie.getCurrentTime() > endKeys[currentKey] ){
-            myMovie.setRate(-1.0);
-        }
-        else if( myMovie.getCurrentTime() < startKeys[currentKey] ){
-            myMovie.setRate(1.0);
-        }
-        
+        if( myMovie.getCurrentTime() > endKeys[currentKey] ){ myMovie.setRate(-1.0); }
+        else if( myMovie.getCurrentTime() < startKeys[currentKey] ){ myMovie.setRate(1.0); }
         
         //keep looping
         tint(255, 255);
@@ -100,7 +97,7 @@ void videoPlayback()
 //---------------------------------------- 
 //HANDLES ARDUINO INTERACTION
 //----------------------------------------
-void userInteraction(){ }
+void userInteraction(){ println("User Interaction"); }
 
 
 //---------------------------------------- 
@@ -110,7 +107,7 @@ void playGIF()
 {   
   //fade in
   if( myMovie.getCurrentTime() - instructionStart <= fadeLength ){ 
-    if( transparency + 25 > 255 ){ transparency = 255; }
+    if( transparency + 25 > 175 ){ transparency = 175; }
     else{ transparency += 25; }
   }
   //fade out
@@ -149,8 +146,6 @@ void nextKey()
 //---------------------------------------------
 //HANDLES MOUSE CLICK - DISPLAY THE NEXT SCENE
 //--------------------------------------------- 
-void mousePress() {
-  setScene(0);
-}
+void mousePress() { setScene(0); }
 
 }//end class

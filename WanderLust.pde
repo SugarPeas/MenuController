@@ -15,7 +15,7 @@ Serial climbPort;
 Serial panoPort;
 Serial hikePort;
 String portClimb = Serial.list()[2];
-String portPano = Serial.list()[5];
+String portPano = Serial.list()[2];
 String portHike = Serial.list()[2];
 
 //handles various scenes 
@@ -33,7 +33,7 @@ void setup()
 {
  //display settings
  frameRate(30);
- size(displayWidth,displayHeight);
+ size(displayWidth,displayHeight,P3D);
  
  //setup serial port connections - used to communicate with arduino boards
  climbPort = new Serial(this, portClimb, 9600);

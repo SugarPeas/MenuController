@@ -6,7 +6,7 @@ class MontageScene extends BaseScene{
 //---------------------------------------- 
 //CONSTRUCTOR
 //----------------------------------------
-MontageScene(PApplet pa){super(pa);}
+MontageScene(PApplet pa){ super(pa); }
 
 
 //---------------------------------------- 
@@ -26,6 +26,7 @@ void begin()
 //----------------------------------------
 void draw()
 {
+  background(0);
   myMovie.centerImage();
   
   //if reached end of video, go to next scene

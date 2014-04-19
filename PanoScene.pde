@@ -1,5 +1,8 @@
-class PanoScene extends BaseScene
-{
+//----------------------------------------
+//SKETCH CONTROLS PANORAMIC SCENE
+//---------------------------------------- 
+class PanoScene extends BaseScene{
+  
   //  ----------Serial stuff----------
   int numSensors = 3;  // we will be expecting for reading data from four sensors
   float[] sensors;       // array to read the 4 values
@@ -30,13 +33,10 @@ class PanoScene extends BaseScene
   float SINCOS_PRECISION = 0.5;
   int SINCOS_LENGTH = int(360.0 / SINCOS_PRECISION);
   
-  PanoScene(PApplet pa)
-  {
-    super(pa);
-  }
+  PanoScene(PApplet pa){ super(pa); }
   
   void draw(){
-//    super.draw();
+
     processSerial();
     background(0);
     translate(width / 2.0, height / 2.0, pushBack);
@@ -55,7 +55,7 @@ class PanoScene extends BaseScene
     }
     
   }
-    
+  
     
   void begin(){
     pushBack = height;
