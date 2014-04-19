@@ -1,4 +1,4 @@
-/* Analog Read to LED
+ /* Analog Read to LED
  * ------------------ 
  *
  * turns on and off a light emitting diode(LED) connected to digital  
@@ -15,9 +15,9 @@
 int potPin1 = 2;    // select the input pin for the potentiometer
 int potPin2 = 3;
 int buttonPin = 1;
-float val = 0;       // variable to store the value coming from the sensor
-float val2 = 0;
-float val3 = 0;
+int val = 0;       // variable to store the value coming from the sensor
+int val2 = 0;
+int val3 = 0;
 
 float maxVal = 1023;
 
@@ -39,11 +39,11 @@ void loop() {
     val = analogRead(potPin1);    // read the value from the sensor
     val2 = analogRead(potPin2);
     val3 = analogRead(buttonPin);
-    Serial.print(val, DEC);
+    Serial.print(val);
     Serial.print(",");
-    Serial.print(val2, DEC);
+    Serial.print(val2);
     Serial.print(",");
-    Serial.println(val3, DEC);
+    Serial.println(val3);
     // update previousTime
     previousTime = currentTime;  
   }

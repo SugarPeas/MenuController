@@ -1,6 +1,6 @@
 class PanoScene extends BaseScene
 {
-//  ----------Serial stuff----------
+  //  ----------Serial stuff----------
   int numSensors = 3;  // we will be expecting for reading data from four sensors
   float[] sensors;       // array to read the 4 values
   float[] pSensors;      // array to store the previuos reading, usefur for comparing
@@ -47,6 +47,7 @@ class PanoScene extends BaseScene
     rotateY(yPot*2 + yOffset);
     textureMode(IMAGE);
     noStroke();
+    //draw texture to sphere
     texturedSphere(pushBack, sphere_tex);
     
     if(button == true){
@@ -54,14 +55,14 @@ class PanoScene extends BaseScene
     }
     
   }
-  
-  
+    
+    
   void begin(){
     pushBack = height;
     initializeSphere(sDetail);
     sphere_tex = loadImage("pano.jpg");
   }
-  
+    
   void processSerial(){
     if(myPort3.available() > 0){  
       String myString = myPort3.readStringUntil('\n');
@@ -90,12 +91,12 @@ class PanoScene extends BaseScene
         
     } //end if
   }
-  
-  
+    
+    
   void mousePress() {
     setScene(2);
   }
-  
+    
   void initializeSphere(int res)
   {
     sinLUT = new float[SINCOS_LENGTH];
@@ -140,8 +141,8 @@ class PanoScene extends BaseScene
     }
     sDetail = res;
   }//end initializeSphere
-  
-  
+    
+    
   // Generic routine to draw textured sphere
   void texturedSphere(float r, PImage t) 
   {
@@ -198,5 +199,6 @@ class PanoScene extends BaseScene
     vertex(sphereX[voff] * r, sphereY[voff] * r, sphereZ[voff] * r, u, v);
     endShape();
     
-  }
-}
+  } //end texturedSphere
+
+}//end class

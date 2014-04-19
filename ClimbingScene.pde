@@ -1,77 +1,79 @@
+//----------------------------------------
+//SKETCH CONTROLS ROCK CLIMBING SCENE
+//---------------------------------------- 
 class ClimbingScene extends BaseScene{
-    
-  Movie climbMovie;
-  
-  //define video keyframes
-  int currentKey = 0;
-  float[] startKeys = { 00.0, 15.0, 19.0, 23.0, 30.0, 52.0, 58.0, 65.0, 85.0, 094.0, 136.0, 144.0, 154.0, 158.0 };
-  float[] endKeys =   { 15.0, 19.0, 23.0, 30.0, 52.0, 58.0, 65.0, 85.0, 94.0, 136.0, 144.0, 154.0, 158.0, 176.727 };
-  
-  
-  ClimbingScene(PApplet pa){
-    super(pa);
-  }
-  
-  
-  //setup
-  void begin(){
-    climbMovie = new Movie(parent, "climbing.mp4");
-  }
-  
-  //loop
-  void draw(){
-     
-    //if video is between keyframes...
-    if( climbMovie.time() >= startKeys[currentKey] && climbMovie.time() < endKeys[currentKey] ){
-      
-      //keep playing
-      climbMovie.play();
-      image(climbMovie, 0, 0);
-      
-    }
-    //if reached end of video, 
-    else if(climbMovie.time() == climbMovie.duration()){
-      mousePress(); //go to next scene
-    }
-    //if reached end of current section...
-    else{
-      climbMovie.pause();
-      
-      //wait for user to trigger next section
-      //if data is available...
-      if(myPort.available() > 0){  
-        
-        //store data
-        val = myPort.readStringUntil('\n');      
-        if(val != null){
-          
-          //if rotary encoder is turning, trigger climbing action
-          if(val.trim().equals("climb")){ climb(); }
-        
-        }//end if 
-      } //end if
-      
-    }//end else
-    
-    
-  }//end draw()
  
-
- //triggers next section of video
- void climb(){
+//----------------------------------------
+//CONSTRUCTOR
+//---------------------------------------- 
+ClimbingScene(PApplet pa){super(pa);}
+ 
   
-   //update current keyframe, if more exist   
-   if(startKeys.length > currentKey+1){
-     currentKey++; 
-   }
+//---------------------------------------- 
+//SCENE SETUP
+//----------------------------------------
+void begin()
+{   
+  //video init and setup
+  myMovie = new JMCMovie(parent, "climbing.mov", RGB);
+  myMovie.frameImage();
+  myMovie.play();
    
- }
- 
- 
- //move to next scene
- void mousePress() {
-   climbMovie.stop();
-   setScene(3);
- }
-  
+  //define video sections
+  currentKey = 0;
+  startKeys = new double[]{ 00.00, 14.00, 20.15, 42.00, 47.00, 56.00, 58.25, 71.01, 73.05 };
+  endKeys = new double[]{ 14.00, 20.15, 42.00, 47.00, 56.00, 58.25, 71.01, 73.05, 85.09 };
+   
+  //animation init and setup
+  gifAnimation = Gif.getPImages(parent, "climbing.gif");
+  gifFrame = 0;
+  transparency = 0;
+   
+  //figure out how long fading in/out should take
+  instructionStart = 11.00;
+  instructionEnd   = 14.00;
+  fadeLength = (instructionEnd - instructionStart) * .15; 
+   
+  //used to center animation
+  gifX = (displayWidth - gifAnimation[0].width) / 2;
+  gifY = (displayHeight - gifAnimation[0].height) / 2;
 }
+  
+  
+  
+//---------------------------------------- 
+//DISPLAY THE SCENE
+//----------------------------------------
+void draw()
+{  
+  videoPlayback(); 
+}
+ 
+ 
+//---------------------------------------- 
+//HANDLES ARDUINO INTERACTION
+//----------------------------------------
+void userInteraction()
+{
+  //wait for user to trigger next section
+  //if data is available...
+  if(climbPort.available() > 0){  
+      val = climbPort.readStringUntil('\n'); //store data
+      
+      if(val != null){ 
+          if(val.trim().equals("climb")){ nextKey(); } //if rotary encoder is turning, trigger climbing action
+      }
+  }
+}//end userInteraction
+
+
+//---------------------------------------- 
+//ADVANCE TO NEXT SCENE - PANORAMIC
+//----------------------------------------
+void mousePress() 
+{
+  myMovie.dispose();
+  setScene(3);
+}
+  
+}//end class
