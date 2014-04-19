@@ -64,8 +64,8 @@ class PanoScene extends BaseScene
   }
     
   void processSerial(){
-    if(myPort3.available() > 0){  
-      String myString = myPort3.readStringUntil('\n');
+    if(panoPort.available() > 0){  
+      String myString = panoPort.readStringUntil('\n');
       
       // if you got any bytes other than the linefeed:
       if (myString != null) {
