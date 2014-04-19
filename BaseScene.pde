@@ -1,6 +1,7 @@
+import processing.serial.*;
 //This file is for properties/functionality all scenes have
 boolean sketchFullScreen() {
-  return true;
+  return false;
 }
 
 String val; //Stores serial messages from arduino
@@ -23,8 +24,10 @@ class BaseScene{
  }
 
   void draw(){
+    println("drawbg");
     image(backgroundImage,0,0,width,height);
     // oversampled fonts tend to look better
+    println("make font");
     textFont(font,36);
     // white float frameRate
     fill(255);
@@ -32,6 +35,7 @@ class BaseScene{
     // gray int frameRate display:
     fill(200);
     text(int(frameRate),60,100);
+    println("done base draw");
   }
   
   void mousePress() {
