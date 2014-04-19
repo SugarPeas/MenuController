@@ -15,6 +15,7 @@ JMCMovie myMovie;
 int currentKey;
 double[] startKeys;
 double[] endKeys;
+boolean reverse;
 
 //used to display instruction animations
 PImage[] gifAnimation;
@@ -74,10 +75,27 @@ void videoPlayback()
     }
     //if current key is odd
     else{
-          
-        //if reached end of section, play video in reverse
-        if( myMovie.getCurrentTime() > endKeys[currentKey] ){ myMovie.setRate(-1.0); }
-        else if( myMovie.getCurrentTime() < startKeys[currentKey] ){ myMovie.setRate(1.0); }
+        
+        if( myMovie.getCurrentTime() > endKeys[currentKey] ){
+            reverse = true;
+        }
+        else if( myMovie.getCurrentTime() < startKeys[currentKey] ){
+            reverse = false;
+        }
+        
+        //easing 
+        if( !reverse && endKeys[currentKey] - myMovie.getCurrentTime() < .35 && myMovie.getRate() > -1.0 ){
+            myMovie.setRate( myMovie.getRate() - 0.1 );
+        }
+        else if ( reverse && endKeys[currentKey] - myMovie.getCurrentTime() < .35 && myMovie.getRate() < 1.0 ){
+            myMovie.setRate( myMovie.getRate() + 0.1 );
+        }
+        else if( reverse && myMovie.getCurrentTime() - startKeys[currentKey] < .35 && myMovie.getRate() > -1.0 ){
+            myMovie.setRate( myMovie.getRate() - 0.1 );
+        }
+        else if( !reverse && myMovie.getCurrentTime() - startKeys[currentKey] < .35 && myMovie.getRate() < 1.0 ){
+            myMovie.setRate( myMovie.getRate() + 0.1 );
+        }
         
         //keep looping
         tint(255, 255);
