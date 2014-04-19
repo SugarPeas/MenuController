@@ -27,6 +27,9 @@ void begin()
 void draw()
 {
   myMovie.centerImage();
+  
+  //if reached end of video, go to next scene
+  if(myMovie.getCurrentTime() == myMovie.getDuration()){ mousePress(); }
 }
 
 

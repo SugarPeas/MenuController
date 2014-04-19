@@ -28,7 +28,7 @@ void begin()
   gifAnimation = Gif.getPImages(parent, "climbing.gif");
   gifFrame = 0;
   transparency = 0;
-   
+  
   //figure out how long fading in/out should take
   instructionStart = 11.00;
   instructionEnd   = 14.00;
