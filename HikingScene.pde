@@ -15,7 +15,7 @@ HikingScene(PApplet pa){ super(pa); }
 void begin()
 { 
   //video init and setup
-  myMovie = new JMCMovie(parent, "hiking.mov", RGB);
+  myMovie = new JMCMovie(parent, "climbing.mov", RGB);
   myMovie.frameImage();
   myMovie.play();
    
