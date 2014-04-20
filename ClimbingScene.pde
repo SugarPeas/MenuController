@@ -21,8 +21,9 @@ void begin()
    
   //define video sections
   currentKey = 0;
-  startKeys = new double[]{ 00.00, 14.00, 20.15, 42.00, 47.00, 56.00, 58.25, 71.01, 73.05 };
-  endKeys = new double[]{ 14.00, 20.15, 42.00, 47.00, 56.00, 58.25, 71.01, 73.05, 85.09 };
+  startKeys = new double[]{ 00.00, 15.00, 20.00, 42.00, 47.00, 56.00, 58.25, 71.00, 73.00 };
+  endKeys = new double[]{ 15.00, 20.00, 42.00, 47.00, 56.00, 58.25, 71.00, 73.00, 85.09 };
+  reverse = false;
   
   //animation init and setup
   gifAnimation = Gif.getPImages(parent, "climbing.gif");
