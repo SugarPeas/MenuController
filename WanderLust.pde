@@ -14,9 +14,9 @@ import gifAnimation.*;
 Serial climbPort;  
 Serial panoPort;
 Serial hikePort;
-String portClimb = Serial.list()[2];
-String portPano = Serial.list()[2];
-String portHike = Serial.list()[2];
+String portClimb = Serial.list()[2]; //9 = 14231
+String portPano = Serial.list()[2];  //8 = 14221
+String portHike = Serial.list()[2];  //7 = 14231
 
 //handles various scenes 
 BaseScene[] scenes = new BaseScene[4];
@@ -53,7 +53,6 @@ void setup()
 
  //start the first scene - intro montage video
  scenes[currentScene].begin();
-
 
 }
 

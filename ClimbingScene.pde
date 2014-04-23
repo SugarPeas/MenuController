@@ -3,6 +3,16 @@
 //---------------------------------------- 
 class ClimbingScene extends BaseScene{
  
+  
+//----------------------------------------
+//VARIABLES
+//----------------------------------------
+int currentKey;
+double[] startKeys;
+double[] endKeys;
+boolean reverse;
+
+  
 //----------------------------------------
 //CONSTRUCTOR
 //---------------------------------------- 
@@ -16,7 +26,6 @@ void begin()
 {   
   //video init and setup
   myMovie = new JMCMovie(parent, "climbing.mov", RGB);
-  myMovie.frameImage();
   myMovie.play();
    
   //define video sections
@@ -28,7 +37,7 @@ void begin()
   //animation init and setup
   gifAnimation = Gif.getPImages(parent, "climbing.gif");
   gifFrame = 0;
-  transparency = 0;
+  gifTransparency = 0;
   
   //figure out how long fading in/out should take
   instructionStart = 11.00;
@@ -47,7 +56,54 @@ void begin()
 //----------------------------------------
 void draw()
 {  
-  videoPlayback(); 
+    background(0);
+    
+    //if near beginning of video, fade in
+    if(myMovie.getCurrentTime() < 1 && (movieTransparency + 8.5) <= 255){ movieTransparency += 8.5; }
+    //if near the end of video, fade out
+    else if(myMovie.getDuration() - myMovie.getCurrentTime() < 1 && (movieTransparency - 8.5) >= 0 ){ movieTransparency -= 8.5; }
+    //if reached end of video, go to next scene
+    else if(myMovie.getCurrentTime() == myMovie.getDuration()){ mousePress(); }
+    
+        
+    //if current key is even
+    if( currentKey % 2 == 0 || currentKey == 0){
+      
+        //if video is between keyframes...
+        if( myMovie.getCurrentTime() >= startKeys[currentKey] && myMovie.getCurrentTime() < endKeys[currentKey] ){
+              
+            //keep playing
+            tint(255, movieTransparency);
+            image(myMovie, movieX, movieY);
+            
+            //show interaction instructions
+            if( myMovie.getCurrentTime() >= instructionStart && myMovie.getCurrentTime() < instructionEnd ){ playGIF(); }
+        }        
+        //if reached end of video section, trigger loop
+        else{ nextKey(); }
+    }
+    //if current key is odd
+    else{
+        
+        //figure out which direction we need to play in
+        if( myMovie.getCurrentTime() > endKeys[currentKey] ){ reverse = true; }
+        else if( myMovie.getCurrentTime() < startKeys[currentKey] ){ reverse = false; }
+        
+        //handles playback speed and easing 
+        if( !reverse && endKeys[currentKey] - myMovie.getCurrentTime() < .5 && myMovie.getRate() > -1.0 ){ myMovie.changeRate(-0.06); }
+        else if ( reverse && endKeys[currentKey] - myMovie.getCurrentTime() < .5 && myMovie.getRate() < 1.0 ){ myMovie.changeRate(0.06); }
+        else if( reverse && myMovie.getCurrentTime() - startKeys[currentKey] < .5 && myMovie.getRate() > -1.0 ){ myMovie.changeRate(-0.06); }
+        else if( !reverse && myMovie.getCurrentTime() - startKeys[currentKey] < .5 && myMovie.getRate() < 1.0 ){ myMovie.changeRate(0.06); }
+        
+        //keep looping
+        tint(255, movieTransparency);
+        image(myMovie, movieX, movieY);  
+          
+        //wait for user interaction to trigger next section
+        userInteraction();
+    
+    }//end else
+    
 }
  
  
@@ -66,6 +122,18 @@ void userInteraction()
       }
   }
 }//end userInteraction
+
+
+//---------------------------------------- 
+//TRIGGERS NEXT SECTION OF VIDEO PLAYBACK
+//----------------------------------------
+void nextKey()
+{
+   //update current video keyframe, if more exist   
+   if(startKeys.length > currentKey+1){
+     currentKey++; 
+   }
+}
 
 
 //---------------------------------------- 

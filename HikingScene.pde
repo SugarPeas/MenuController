@@ -16,19 +16,12 @@ void begin()
 { 
   //video init and setup
   myMovie = new JMCMovie(parent, "hiking.mov", RGB);
-  myMovie.frameImage();
   myMovie.play();
-   
-  //define video sections
-  currentKey = 0;
-  startKeys = new double[]{ 00.00, 14.00, 20.15, 42.00, 47.00, 56.00, 58.25, 71.01, 73.05 };
-  endKeys = new double[]{ 14.00, 20.15, 42.00, 47.00, 56.00, 58.25, 71.01, 73.05, 85.09 };
-  reverse = false;
-   
+  
   //animation init and setup
   gifAnimation = Gif.getPImages(parent, "hiking.gif");
   gifFrame = 0;
-  transparency = 0;
+  gifTransparency = 0;
    
   //figure out how long fading in/out should take
   instructionStart = 11.00;
@@ -47,7 +40,18 @@ void begin()
 //----------------------------------------
 void draw()
 { 
-  videoPlayback(); 
+  background(0);
+  
+  //if near beginning of video, fade in
+  if(myMovie.getCurrentTime() < 1 && (movieTransparency + 8.5) <= 255){ movieTransparency += 8.5; }
+  //if near the end of video, fade out
+  else if(myMovie.getDuration() - myMovie.getCurrentTime() < 1 && (movieTransparency - 8.5) >= 0 ){ movieTransparency -= 8.5; }
+  //if reached end of video, go to next scene
+  else if(myMovie.getCurrentTime() == myMovie.getDuration()){ mousePress(); }
+  
+  //display frame
+  tint(255, movieTransparency);
+  image(myMovie, movieX, movieY);
 }
  
  
@@ -59,7 +63,9 @@ void userInteraction()
   //if data is available...
   if(hikePort.available() > 0){
       val = hikePort.readStringUntil('\n'); //store data
-      if(val != null){ nextKey(); } //trigger next video section
+      if(val != null){ 
+        //play next video
+      } //trigger next video section
   }
 }
 

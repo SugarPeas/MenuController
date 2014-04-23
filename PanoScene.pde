@@ -37,7 +37,7 @@ class PanoScene extends BaseScene{
   
   void draw(){
 
-    processSerial();
+    //processSerial();
     background(0);
     translate(width / 2.0, height / 2.0, pushBack);
     if(abs(rotx) > PI / 2) {
