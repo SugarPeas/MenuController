@@ -23,9 +23,6 @@ float gifX;
 float gifY;
  
 //handles animation fade in and out
-double instructionStart;
-double instructionEnd;
-double fadeLength;
 float gifTransparency;
  
  
@@ -53,28 +50,24 @@ void draw()
     //if near the end of video, fade out
     else if(myMovie.getDuration() - myMovie.getCurrentTime() < 1 && (movieTransparency - 8.5) >= 0 ){ movieTransparency -= 8.5; }
     //if reached end of video, go to next scene
-    else if(myMovie.getCurrentTime() == myMovie.getDuration()){ mousePress(); }
+    else if(myMovie.getCurrentTime() == myMovie.getDuration()){ println("next scene"); mousePress(); }
 }
 
 
 //---------------------------------------- 
-//HANDLES ARDUINO INTERACTION
+//PLAYS ANIMATED GIF FILES FOR VIDEO
 //----------------------------------------
-void userInteraction(){ println("User Interaction"); }
-
-
-//---------------------------------------- 
-//PLAYS ANIMATED GIF FILES
-//----------------------------------------
-void playGIF()
+void playGIF(double gifStart, double gifEnd)
 {   
+  double fadeLength = (gifEnd - gifStart) * .15;
+  
   //fade in
-  if( myMovie.getCurrentTime() - instructionStart <= fadeLength ){ 
+  if( myMovie.getCurrentTime() - gifStart <= fadeLength ){ 
     if( gifTransparency + 25 > 175 ){ gifTransparency = 175; }
     else{ gifTransparency += 25; }
   }
   //fade out
-  else if( instructionEnd - myMovie.getCurrentTime() <= fadeLength ){
+  else if( gifEnd - myMovie.getCurrentTime() <= fadeLength ){
     if( gifTransparency - 25 < 0.0 ){ gifTransparency = 0.0; }
     else{ gifTransparency -= 25; }
   }

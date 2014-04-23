@@ -21,12 +21,7 @@ void begin()
   //animation init and setup
   gifAnimation = Gif.getPImages(parent, "hiking.gif");
   gifFrame = 0;
-  gifTransparency = 0;
-   
-  //figure out how long fading in/out should take
-  instructionStart = 11.00;
-  instructionEnd   = 14.00;
-  fadeLength = (instructionEnd - instructionStart) * .15; 
+  gifTransparency = 0; 
    
   //used to center animation
   gifX = (displayWidth - gifAnimation[0].width) / 2;

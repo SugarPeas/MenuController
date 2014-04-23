@@ -12,6 +12,9 @@ double[] startKeys;
 double[] endKeys;
 boolean reverse;
 
+double instructionStart;
+double instructionEnd;
+
   
 //----------------------------------------
 //CONSTRUCTOR
@@ -31,7 +34,7 @@ void begin()
   //define video sections
   currentKey = 0;
   startKeys = new double[]{ 00.00, 15.00, 20.00, 42.00, 47.00, 56.00, 58.25, 71.00, 73.00 };
-  endKeys = new double[]{ 15.00, 20.00, 42.00, 47.00, 56.00, 58.25, 71.00, 73.00, 85.09 };
+  endKeys = new double[]{ 15.00, 20.00, 42.00, 47.00, 56.00, 58.25, 71.00, 73.00, 85.08724975585938 };
   reverse = false;
   
   //animation init and setup
@@ -39,10 +42,9 @@ void begin()
   gifFrame = 0;
   gifTransparency = 0;
   
-  //figure out how long fading in/out should take
+  //define when instructions should fade in or out
   instructionStart = 11.00;
   instructionEnd   = 14.00;
-  fadeLength = (instructionEnd - instructionStart) * .15; 
    
   //used to center animation
   gifX = (displayWidth - gifAnimation[0].width) / 2;
@@ -57,7 +59,7 @@ void begin()
 void draw()
 {  
     super.draw();
-    
+     
         
     //if current key is even
     if( currentKey % 2 == 0 || currentKey == 0){
@@ -70,7 +72,7 @@ void draw()
             image(myMovie, movieX, movieY);
             
             //show interaction instructions
-            if( myMovie.getCurrentTime() >= instructionStart && myMovie.getCurrentTime() < instructionEnd ){ playGIF(); }
+            if( myMovie.getCurrentTime() >= instructionStart && myMovie.getCurrentTime() < instructionEnd ){ playGIF(instructionStart, instructionEnd); }
         }        
         //if reached end of video section, trigger loop
         else{ nextKey(); }
