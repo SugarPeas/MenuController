@@ -50,7 +50,7 @@ void draw()
     //if near the end of video, fade out
     else if(myMovie.getDuration() - myMovie.getCurrentTime() < 1 && (movieTransparency - 8.5) >= 0 ){ movieTransparency -= 8.5; }
     //if reached end of video, go to next scene
-    else if(myMovie.getCurrentTime() == myMovie.getDuration()){ println("next scene"); mousePress(); }
+    else if(myMovie.getCurrentTime() == myMovie.getDuration()){ mousePress(); }
 }
 
 

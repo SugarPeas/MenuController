@@ -79,7 +79,7 @@ void setScene(int id)
 //------------------------------------------
 //HANDLES MOUSE CLICK EVENT
 //------------------------------------------
-void mousePressed()
+void mouseReleased()
 {
   scenes[currentScene].mousePress();
 }

@@ -19,7 +19,7 @@ double instructionEnd;
 //----------------------------------------
 //CONSTRUCTOR
 //---------------------------------------- 
-ClimbingScene(PApplet pa){super(pa); }
+ClimbingScene(PApplet pa){ super(pa); }
  
   
 //---------------------------------------- 
@@ -33,8 +33,8 @@ void begin()
    
   //define video sections
   currentKey = 0;
-  startKeys = new double[]{ 00.00, 15.00, 20.00, 42.00, 47.00, 56.00, 58.25, 71.00, 73.00 };
-  endKeys = new double[]{ 15.00, 20.00, 42.00, 47.00, 56.00, 58.25, 71.00, 73.00, 85.08724975585938 };
+  startKeys = new double[]{ 00.0, 15.0, 20.0, 42.0, 47.0, 56.0, 58.0, 71.0, 73.0 };
+  endKeys   = new double[]{ 15.0, 20.0, 42.0, 47.0, 56.0, 58.0, 71.0, 73.0, 85.1 };
   reverse = false;
   
   //animation init and setup
@@ -59,8 +59,7 @@ void begin()
 void draw()
 {  
     super.draw();
-     
-        
+             
     //if current key is even
     if( currentKey % 2 == 0 || currentKey == 0){
       
@@ -76,22 +75,23 @@ void draw()
         }        
         //if reached end of video section, trigger loop
         else{ nextKey(); }
+        
     }
     //if current key is odd
     else{
         
         //figure out which direction we need to play in
-        if( myMovie.getCurrentTime() > endKeys[currentKey] ){ reverse = true; }
-        else if( myMovie.getCurrentTime() < startKeys[currentKey] ){ reverse = false; }
+        if( myMovie.getCurrentTime() > endKeys[currentKey] ){ reverse = true; myMovie.setRate(-1.0); }
+        else if( myMovie.getCurrentTime() < startKeys[currentKey] ){ reverse = false; myMovie.setRate(1.0); }
         
         //handles playback speed and easing 
-        if( !reverse && endKeys[currentKey] - myMovie.getCurrentTime() < .5 && myMovie.getRate() > -1.0 ){ myMovie.changeRate(-0.06); }
-        else if ( reverse && endKeys[currentKey] - myMovie.getCurrentTime() < .5 && myMovie.getRate() < 1.0 ){ myMovie.changeRate(0.06); }
-        else if( reverse && myMovie.getCurrentTime() - startKeys[currentKey] < .5 && myMovie.getRate() > -1.0 ){ myMovie.changeRate(-0.06); }
-        else if( !reverse && myMovie.getCurrentTime() - startKeys[currentKey] < .5 && myMovie.getRate() < 1.0 ){ myMovie.changeRate(0.06); }
+//        if( !reverse && endKeys[currentKey] - myMovie.getCurrentTime() < .5 && myMovie.getRate() > -1.0 ){ myMovie.changeRate(-0.06); }
+//        else if ( reverse && endKeys[currentKey] - myMovie.getCurrentTime() < .5 && myMovie.getRate() < 1.0 ){ myMovie.changeRate(0.06); }
+//        else if( reverse && myMovie.getCurrentTime() - startKeys[currentKey] < .5 && myMovie.getRate() > -1.0 ){ myMovie.changeRate(-0.06); }
+//        else if( !reverse && myMovie.getCurrentTime() - startKeys[currentKey] < .5 && myMovie.getRate() < 1.0 ){ myMovie.changeRate(0.06); }
         
         //keep looping
-        tint(255, movieTransparency);
+        tint(255, 255);
         image(myMovie, movieX, movieY);  
           
         //wait for user interaction to trigger next section
