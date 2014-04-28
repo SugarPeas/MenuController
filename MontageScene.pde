@@ -18,6 +18,9 @@ void begin()
   //video init and setup
   myMovie = new JMCMovie(parent, "introMontage.mp4", RGB);
   myMovie.play();
+  
+  movieX = (displayWidth - 1280) / 2;
+  movieY = (displayHeight - 720) / 2;
 }
 
 

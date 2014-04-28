@@ -12,8 +12,8 @@ String val; //Stores serial messages from arduino
 
 //handles video playback
 JMCMovie myMovie;
-float movieX = (displayWidth - 1280) / 2;
-float movieY = (displayHeight - 720) / 2;
+float movieX;
+float movieY;
 float movieTransparency = 0;
 
 //used to display instruction animations

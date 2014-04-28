@@ -28,14 +28,18 @@ ClimbingScene(PApplet pa){ super(pa); }
 void begin()
 {   
   //video init and setup
-  myMovie = new JMCMovie(parent, "climbing.mov", RGB);
+  myMovie = new JMCMovie(parent, "climb_converted.mov", RGB);
   myMovie.play();
    
   //define video sections
   currentKey = 0;
-  startKeys = new double[]{ 00.0, 15.0, 20.0, 42.0, 47.0, 56.0, 58.0, 71.0, 73.0 };
-  endKeys   = new double[]{ 15.0, 20.0, 42.0, 47.0, 56.0, 58.0, 71.0, 73.0, 85.1 };
+  startKeys = new double[]{ 00.0, 14.0, 19.0, 29.0, 31.0, 43.0, 45.0 };
+  endKeys   = new double[]{ 14.0, 19.0, 28.0, 31.0, 43.0, 45.0, 54.0 };
+                         // start loop  play  loop  play  loop  play
   reverse = false;
+  
+  movieX = (displayWidth - 1920) / 2;
+  movieY = (displayHeight - 1080) / 2;
   
   //animation init and setup
   gifAnimation = Gif.getPImages(parent, "climbing.gif");

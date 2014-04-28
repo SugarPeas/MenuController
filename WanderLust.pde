@@ -16,7 +16,7 @@ Serial panoPort;
 Serial hikePort;
 String portClimb = Serial.list()[2]; //9 = 14231
 String portPano = Serial.list()[2];  //8 = 14221
-String portHike = Serial.list()[2];  //7 = 14231
+String portHike = Serial.list()[2];  //7 = 14211
 
 //handles various scenes 
 BaseScene[] scenes = new BaseScene[4];

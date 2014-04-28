@@ -22,7 +22,7 @@ void begin()
   movieY = (displayHeight - 1080) / 2;
 
   //video init and setup
-  myMovie = new JMCMovie(parent, "hiking.mov", RGB);
+  myMovie = new JMCMovie(parent, "hike.mov", RGB);
   myMovie.play();
   
   //animation init and setup
