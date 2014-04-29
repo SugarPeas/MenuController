@@ -46,9 +46,9 @@ void draw()
     background(0);
     
     //if near beginning of video, fade in
-    if(myMovie.getCurrentTime() < 1 && (movieTransparency + 8.5) <= 255){ movieTransparency += 8.5; }
+    if(myMovie.getCurrentTime() < 1 && (movieTransparency + 10) <= 255){ movieTransparency += 10; }
     //if near the end of video, fade out
-    else if(myMovie.getDuration() - myMovie.getCurrentTime() < 1 && (movieTransparency - 8.5) >= 0 ){ movieTransparency -= 8.5; }
+    else if(myMovie.getDuration() - myMovie.getCurrentTime() < 1 && (movieTransparency - 10) >= 0 ){ movieTransparency -= 10; }
     //if reached end of video, go to next scene
     else if(myMovie.getCurrentTime() == myMovie.getDuration()){ mousePress(); }
 }
@@ -57,33 +57,29 @@ void draw()
 //---------------------------------------- 
 //PLAYS ANIMATED GIF FILES FOR VIDEO
 //----------------------------------------
-void playGIF(double gifStart, double gifEnd)
+void playGIF()
 {   
-  double fadeLength = (gifEnd - gifStart) * .15;
   
   //fade in
-  if( myMovie.getCurrentTime() - gifStart <= fadeLength ){ 
-    if( gifTransparency + 25 > 175 ){ gifTransparency = 175; }
-    else{ gifTransparency += 25; }
-  }
-  //fade out
-  else if( gifEnd - myMovie.getCurrentTime() <= fadeLength ){
-    if( gifTransparency - 25 < 0.0 ){ gifTransparency = 0.0; }
-    else{ gifTransparency -= 25; }
-  }
+//  if( ??? ){ 
+//    if( gifTransparency + 25 > 175 ){ gifTransparency = 175; }
+//    else{ gifTransparency += 25; }
+//  }
+//  //fade out
+//  else if( ??? ){
+//    if( gifTransparency - 25 < 0.0 ){ gifTransparency = 0.0; }
+//    else{ gifTransparency -= 25; }
+//  }
  
   //display current GIF frame
-  tint(255, gifTransparency); 
+  tint(255, 175); 
   image(gifAnimation[gifFrame], gifX, gifY);
    
   //display next GIF frame, if more exist
-  if(gifAnimation.length > gifFrame+1){
-    gifFrame++; 
-  }
-  //animation loops back to the beginning
-  else{
-    gifFrame = 0;
-  }  
+  if(gifAnimation.length > gifFrame+1){ gifFrame++; }
+  //loop back to the beginning
+  else{ gifFrame = 0; }  
+  
 }
 
  

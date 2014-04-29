@@ -31,7 +31,6 @@ void draw()
 {
   super.draw();
     
-  
   //display frame
   tint(255, movieTransparency);
   image(myMovie, movieX, movieY);

@@ -48,7 +48,7 @@ void draw()
   super.draw();
   
   if(myMovie.getCurrentTime() >= instructionStart && myMovie.getCurrentTime() <= instructionEnd){
-    playGIF(instructionStart, instructionEnd);
+    playGIF();
   }
   
   //display frame

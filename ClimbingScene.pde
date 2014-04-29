@@ -20,35 +20,31 @@ double instructionEnd;
 //CONSTRUCTOR
 //---------------------------------------- 
 ClimbingScene(PApplet pa){ super(pa); }
- 
+
   
 //---------------------------------------- 
 //SCENE SETUP
 //----------------------------------------
 void begin()
-{   
+{ 
   //video init and setup
   myMovie = new JMCMovie(parent, "climb_converted.mov", RGB);
   myMovie.play();
+  
+  //used to center video
+  movieX = (displayWidth - 1920) / 2;
+  movieY = (displayHeight - 1080) / 2;
    
   //define video sections
   currentKey = 0;
   startKeys = new double[]{ 00.0, 14.0, 19.0, 29.0, 31.0, 43.0, 45.0 };
   endKeys   = new double[]{ 14.0, 19.0, 28.0, 31.0, 43.0, 45.0, 54.0 };
                          // start loop  play  loop  play  loop  play
-  reverse = false;
-  
-  movieX = (displayWidth - 1920) / 2;
-  movieY = (displayHeight - 1080) / 2;
   
   //animation init and setup
   gifAnimation = Gif.getPImages(parent, "climbing.gif");
   gifFrame = 0;
   gifTransparency = 0;
-  
-  //define when instructions should fade in or out
-  instructionStart = 11.00;
-  instructionEnd   = 14.00;
    
   //used to center animation
   gifX = (displayWidth - gifAnimation[0].width) / 2;
@@ -57,11 +53,11 @@ void begin()
   
   
   
-//---------------------------------------- 
+//----------------------------------------
 //DISPLAY THE SCENE
 //----------------------------------------
 void draw()
-{  
+{
     super.draw();
              
     //if current key is even
@@ -73,9 +69,7 @@ void draw()
             //keep playing
             tint(255, movieTransparency);
             image(myMovie, movieX, movieY);
-            
-            //show interaction instructions
-            if( myMovie.getCurrentTime() >= instructionStart && myMovie.getCurrentTime() < instructionEnd ){ playGIF(instructionStart, instructionEnd); }
+
         }        
         //if reached end of video section, trigger loop
         else{ nextKey(); }
@@ -84,25 +78,26 @@ void draw()
     //if current key is odd
     else{
         
-        //figure out which direction we need to play in
-        if( myMovie.getCurrentTime() > endKeys[currentKey] ){ reverse = true; myMovie.setRate(-1.0); }
-        else if( myMovie.getCurrentTime() < startKeys[currentKey] ){ reverse = false; myMovie.setRate(1.0); }
-        
-        //handles playback speed and easing 
-//        if( !reverse && endKeys[currentKey] - myMovie.getCurrentTime() < .5 && myMovie.getRate() > -1.0 ){ myMovie.changeRate(-0.06); }
-//        else if ( reverse && endKeys[currentKey] - myMovie.getCurrentTime() < .5 && myMovie.getRate() < 1.0 ){ myMovie.changeRate(0.06); }
-//        else if( reverse && myMovie.getCurrentTime() - startKeys[currentKey] < .5 && myMovie.getRate() > -1.0 ){ myMovie.changeRate(-0.06); }
-//        else if( !reverse && myMovie.getCurrentTime() - startKeys[currentKey] < .5 && myMovie.getRate() < 1.0 ){ myMovie.changeRate(0.06); }
-        
-        //keep looping
+        //slow down the video
+        if( myMovie.getRate() - 0.05 > 0 ){
+          myMovie.changeRate(-0.05);
+        }
+                
+        //keep playing
         tint(255, 255);
-        image(myMovie, movieX, movieY);  
-          
+        image(myMovie, movieX, movieY); 
+        
+        //overlay
+        fill(255, 255, 255, 200);
+        rect(0, 0, displayWidth, displayHeight); 
+        
+        //play gif
+        playGIF();
+        
         //wait for user interaction to trigger next section
         userInteraction();
     
-    }//end else
-    
+    }
 }
  
  

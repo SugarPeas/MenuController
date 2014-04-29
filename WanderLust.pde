@@ -6,6 +6,7 @@ import jmcvideo.*;
 import processing.opengl.*;
 import gifAnimation.*;
 
+
 //----------------------------------------
 //VARIALBLES
 //----------------------------------------

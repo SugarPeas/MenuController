@@ -19,7 +19,6 @@ boolean button = false;
 float maxVal = 1023;
 
 //----------3D sphere stuff----------
-
 PImage sphere_tex;
 float rotx = 0.0;
 float roty = 0.0;
@@ -38,6 +37,10 @@ float cosLUT[];
 float SINCOS_PRECISION = 0.5;
 int SINCOS_LENGTH = int(360.0 / SINCOS_PRECISION);
 
+//----------Fade In / Timer Stuff----------
+int startTime;
+float rectTransparency = 255;
+
 
 //----------------------------------------
 //CONSTRUCTOR
@@ -49,7 +52,9 @@ PanoScene(PApplet pa){ super(pa); }
 //SCENE SETUP
 //----------------------------------------
 void begin()
-{  
+{ 
+  startTime = millis(); //get starting time
+  
   pushBack = height;
   initializeSphere(sDetail);
   sphere_tex = loadImage("pano.jpg");
@@ -60,24 +65,44 @@ void begin()
 //DISPLAY THE SCENE
 //----------------------------------------
 void draw()
-{
-  tint(255, 255);
-  //processSerial();
-  background(0);
-  translate(width / 2.0, height / 2.0, pushBack);
-  if(abs(rotx) > PI / 2) {
-    deltax = -deltax;
-  }
-  rotateX(xPot*2);
-  rotateY(yPot*2 + yOffset);
-  textureMode(IMAGE);
-  noStroke();
-  //draw texture to sphere
-  texturedSphere(pushBack, sphere_tex);
+{ 
+      
+    //processSerial();
   
-  if(button == true){
-    save("coolpic.jpg");
-  }
+    //make sure panoramic shows up
+    tint(255, 255);
+    
+    translate(width / 2.0, height / 2.0, pushBack);
+    if(abs(rotx) > PI / 2) {
+      deltax = -deltax;
+    }
+    rotateX(xPot*2);
+    rotateY(yPot*2 + yOffset);
+    textureMode(IMAGE);
+    noStroke();
+    //draw texture to sphere
+    texturedSphere(pushBack, sphere_tex);
+    
+    if(button == true){
+      save("coolpic.jpg");
+    }
+  
+  
+    //fade in at beginning of scene
+    if( millis() - startTime < 2000 ){
+      
+      //needed for the overlay to show up      
+      camera();
+      hint(DISABLE_DEPTH_TEST);
+      
+      //black overlay
+      fill(0, 0, 0, rectTransparency);
+      rect(0, 0, displayWidth, displayHeight); 
+      
+      //update transparency of overlay
+      if(rectTransparency - 10 >= 0){ rectTransparency -= 10; }
+      else{ rectTransparency = 0; }
+    }
 }
   
     
@@ -231,7 +256,6 @@ void texturedSphere(float r, PImage t)
 //----------------------------------------
 void mousePress() 
 {
-  myMovie.dispose();
   setScene(0);
 }
 
