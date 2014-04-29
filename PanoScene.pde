@@ -57,7 +57,7 @@ void begin()
   
   pushBack = height;
   initializeSphere(sDetail);
-  sphere_tex = loadImage("pano.jpg");
+  sphere_tex = loadImage("pano.jpg");  
 }
   
   
@@ -65,8 +65,7 @@ void begin()
 //DISPLAY THE SCENE
 //----------------------------------------
 void draw()
-{ 
-      
+{
     //processSerial();
   
     //make sure panoramic shows up

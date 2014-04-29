@@ -10,20 +10,39 @@ class BaseScene
 PApplet parent;
 String val; //Stores serial messages from arduino
 
-//handles video playback
+//setup video display
 JMCMovie myMovie;
 float movieX;
 float movieY;
 float movieTransparency = 0;
+
+//controls playing video
+int savedPlayTime;
+int playTime = 20000;
+
+//controls pausing video
+int savedPauseTime;
+int pauseTime = 10000;
 
 //used to display instruction animations
 PImage[] gifAnimation;
 int gifFrame;
 float gifX;
 float gifY;
- 
-//handles animation fade in and out
+
+//controls fading gif
+int savedGifTime;
+int gifTime = 2000;
 float gifTransparency;
+
+//is user interacting?
+boolean working = false;
+
+//controls fading overlay
+int savedOverlayTime;
+int overlayTime = 2000;
+float overlayTransparency = 0;
+boolean fadeIn = true;
  
  
 //----------------------------------------
@@ -54,8 +73,80 @@ void draw()
 }
 
 
+//----------------------------------------
+//HANDLES VIDEO INTERACTION
+//----------------------------------------
+void interactiveVideo()
+{
+    //waiting for user interaction...
+    if(!working){
+      
+        //give user time to respond, if they don't pause the video
+        if(millis() - savedPauseTime > pauseTime){ myMovie.pause(); }
+        //slow down the video
+        else{
+            if(myMovie.getRate() - 0.01 > 0.2){ myMovie.changeRate(-0.01); }
+        }
+        
+        //wait for user interaction to trigger next section
+        userInteraction(); 
+    }
+    //playing next chunk of video
+    else if(working){
+      
+        //play 5 seconds then wait for user interaction again
+        if(millis() - savedPlayTime > playTime){  
+            //stop climbing
+            working = false;
+            fadeIn = true; 
+            
+            //restart timers
+            savedPauseTime = millis();
+            savedOverlayTime = millis();
+            savedGifTime = millis();
+         }
+        //speed video back up
+        else{
+            if(myMovie.getRate() + 0.01 < 1.0){ myMovie.changeRate(0.01); }
+        }
+        
+        //restart video if paused
+        if(myMovie.isPlaying() == false){ myMovie.play(); } 
+    }
+        
+    //show frame
+    tint(255, movieTransparency);
+    image(myMovie, movieX, movieY);
+    
+    // fade/show overlay
+    if(millis() - savedOverlayTime < overlayTime && fadeIn){ overlay("fadeIn"); }
+    else if(millis() - savedOverlayTime < overlayTime && !fadeIn){ overlay("fadeOut"); }
+    else{ overlay(""); }
+    
+    // fade/play instructional gif
+    if(millis() - savedGifTime < gifTime && fadeIn){ playGIF("fadeIn"); }
+    else if(millis() - savedGifTime < gifTime && !fadeIn){ playGIF("fadeOut"); }
+    else{ playGIF(""); }
+}
+
+
 //---------------------------------------- 
-//PLAYS ANIMATED GIF FILES FOR VIDEO
+//FADES AND DISPLAYS THE VIDEO OVERLAY
+//----------------------------------------
+void overlay(String fade)
+{
+    //handles fading in and out
+    if(fade == "fadeIn" && overlayTransparency + 10 <= 180){ overlayTransparency += 10; }
+    else if(fade == "fadeOut" && overlayTransparency - 10 >= 0){ overlayTransparency -= 10; }
+    
+    //show overlay
+    fill(255, 255, 255, overlayTransparency);
+    rect(0, 0, displayWidth, displayHeight); 
+}
+
+
+//---------------------------------------- 
+//FADES AND PLAYS ANIMATED GIF FILES
 //----------------------------------------
 void playGIF(String fade)
 {   
@@ -70,18 +161,26 @@ void playGIF(String fade)
     if( gifTransparency - 10 < 0.0 ){ gifTransparency = 0.0; }
     else{ gifTransparency -= 10; }
   }
-   
+ 
   //display current GIF frame
   tint(255, gifTransparency); 
   image(gifAnimation[gifFrame], gifX, gifY);
-   
+  
   //move onto next GIF frame, if more exist
   if(gifAnimation.length > gifFrame+1){ gifFrame++; }
   //loop back to the beginning
   else{ gifFrame = 0; }   
 }
 
- 
+
+//---------------------------------------- 
+//HANDLES ARDUINO INTERACTION
+//----------------------------------------
+void userInteraction()
+{
+
+}
+
  
 //---------------------------------------------
 //HANDLES MOUSE CLICK - DISPLAY THE NEXT SCENE
