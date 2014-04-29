@@ -57,29 +57,28 @@ void draw()
 //---------------------------------------- 
 //PLAYS ANIMATED GIF FILES FOR VIDEO
 //----------------------------------------
-void playGIF()
+void playGIF(String fade)
 {   
   
   //fade in
-//  if( ??? ){ 
-//    if( gifTransparency + 25 > 175 ){ gifTransparency = 175; }
-//    else{ gifTransparency += 25; }
-//  }
-//  //fade out
-//  else if( ??? ){
-//    if( gifTransparency - 25 < 0.0 ){ gifTransparency = 0.0; }
-//    else{ gifTransparency -= 25; }
-//  }
- 
+  if(fade == "fadeIn"){ 
+    if( gifTransparency + 10 > 180 ){ gifTransparency = 180; }
+    else{ gifTransparency += 10; }
+  }
+  //fade out
+  else if(fade == "fadeOut"){
+    if( gifTransparency - 10 < 0.0 ){ gifTransparency = 0.0; }
+    else{ gifTransparency -= 10; }
+  }
+   
   //display current GIF frame
-  tint(255, 175); 
+  tint(255, gifTransparency); 
   image(gifAnimation[gifFrame], gifX, gifY);
    
-  //display next GIF frame, if more exist
+  //move onto next GIF frame, if more exist
   if(gifAnimation.length > gifFrame+1){ gifFrame++; }
   //loop back to the beginning
-  else{ gifFrame = 0; }  
-  
+  else{ gifFrame = 0; }   
 }
 
  

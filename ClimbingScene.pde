@@ -7,13 +7,30 @@ class ClimbingScene extends BaseScene{
 //----------------------------------------
 //VARIABLES
 //----------------------------------------
-int currentKey;
-double[] startKeys;
-double[] endKeys;
-boolean reverse;
 
-double instructionStart;
-double instructionEnd;
+//is user climbing?
+boolean climbing = false;
+
+//controls playing video
+int savedPlayTime;
+int playTime = 10000;
+
+//controls pausing video
+int savedPauseTime;
+int pauseTime = 20000;
+
+//controls fading overlay
+int savedOverlayTime;
+int overlayTime = 2000;
+float overlayTransparency = 0;
+
+//controls fading gif
+int savedGifTime;
+int gifTime = 2000;
+
+boolean fadeIn = true;
+
+
 
   
 //----------------------------------------
@@ -34,12 +51,6 @@ void begin()
   //used to center video
   movieX = (displayWidth - 1920) / 2;
   movieY = (displayHeight - 1080) / 2;
-   
-  //define video sections
-  currentKey = 0;
-  startKeys = new double[]{ 00.0, 14.0, 19.0, 29.0, 31.0, 43.0, 45.0 };
-  endKeys   = new double[]{ 14.0, 19.0, 28.0, 31.0, 43.0, 45.0, 54.0 };
-                         // start loop  play  loop  play  loop  play
   
   //animation init and setup
   gifAnimation = Gif.getPImages(parent, "climbing.gif");
@@ -49,6 +60,11 @@ void begin()
   //used to center animation
   gifX = (displayWidth - gifAnimation[0].width) / 2;
   gifY = (displayHeight - gifAnimation[0].height) / 2;
+  
+  //timers
+  savedPauseTime = millis();
+  savedOverlayTime = millis();
+  savedGifTime = millis();
 }
   
   
@@ -59,47 +75,69 @@ void begin()
 void draw()
 {
     super.draw();
-             
-    //if current key is even
-    if( currentKey % 2 == 0 || currentKey == 0){
+    
+    //waiting for user interaction...
+    if(!climbing){
       
-        //if video is between keyframes...
-        if( myMovie.getCurrentTime() >= startKeys[currentKey] && myMovie.getCurrentTime() < endKeys[currentKey] ){
-              
-            //keep playing
-            tint(255, movieTransparency);
-            image(myMovie, movieX, movieY);
-
-        }        
-        //if reached end of video section, trigger loop
-        else{ nextKey(); }
-        
-    }
-    //if current key is odd
-    else{
-        
+        //give user time to respond, if they don't pause the video
+        if(millis() - savedPauseTime > pauseTime){ myMovie.pause(); }
         //slow down the video
-        if( myMovie.getRate() - 0.05 > 0 ){
-          myMovie.changeRate(-0.05);
+        else{
+            if(myMovie.getRate() - 0.01 > 0.2){ myMovie.changeRate(-0.01); }
         }
-                
-        //keep playing
-        tint(255, 255);
-        image(myMovie, movieX, movieY); 
-        
-        //overlay
-        fill(255, 255, 255, 200);
-        rect(0, 0, displayWidth, displayHeight); 
-        
-        //play gif
-        playGIF();
         
         //wait for user interaction to trigger next section
-        userInteraction();
-    
+        userInteraction(); 
     }
+    else if(climbing){
+      
+        //play 5 seconds then wait for user interaction again
+        if(millis() - savedPlayTime > playTime){  
+            //stop climbing
+            climbing = false;
+            fadeIn = true; 
+            
+            //restart timers
+            savedPlayTime = millis();
+            savedOverlayTime = millis();
+            savedGifTime = millis();
+         }
+        //speed video back up
+        else{
+            if(myMovie.getRate() + 0.01 < 1.0){ myMovie.changeRate(0.01); }
+        }
+        
+        //restart video if paused
+        if(myMovie.isPlaying() == false){ myMovie.play(); } 
+      
+    }
+        
+    //show frame
+    tint(255, movieTransparency);
+    image(myMovie, movieX, movieY);
+    
+    // fade/show overlay
+    if(millis() - savedOverlayTime < overlayTime && fadeIn){ overlay("fadeIn"); }
+    else if(millis() - savedOverlayTime < overlayTime && !fadeIn){ overlay("fadeOut"); }
+    else{ overlay(""); }
+    
+    // fade/play instructional gif
+    if(millis() - savedGifTime < gifTime && fadeIn){ playGIF("fadeIn"); }
+    else if(millis() - savedGifTime < gifTime && !fadeIn){ playGIF("fadeOut"); }
+    else{ playGIF(""); }
 }
  
+
+void overlay(String fade)
+{
+    //overlay
+    if(fade == "fadeIn" && overlayTransparency + 10 <= 180){ overlayTransparency += 10; }
+    else if(fade == "fadeOut" && overlayTransparency - 10 >= 0){ overlayTransparency -= 10; }
+    
+    fill(255, 255, 255, overlayTransparency);
+    rect(0, 0, displayWidth, displayHeight); 
+}
+
  
 //---------------------------------------- 
 //HANDLES ARDUINO INTERACTION
@@ -112,22 +150,24 @@ void userInteraction()
       val = climbPort.readStringUntil('\n'); //store data
       
       if(val != null){ 
-          if(val.trim().equals("climb")){ nextKey(); } //if rotary encoder is turning, trigger climbing action
+        
+          //if rotary encoder is turning, trigger climbing action
+          if(val.trim().equals("climb")){ 
+              
+              //start playing video
+              climbing = true;
+              fadeIn = false;
+              
+              //restart timers
+              savedPlayTime = millis();
+              savedOverlayTime = millis();
+              savedGifTime = millis();
+              
+          } 
       }
   }
 }//end userInteraction
 
-
-//---------------------------------------- 
-//TRIGGERS NEXT SECTION OF VIDEO PLAYBACK
-//----------------------------------------
-void nextKey()
-{
-   //update current video keyframe, if more exist   
-   if(startKeys.length > currentKey+1){
-     currentKey++; 
-   }
-}
 
 
 //---------------------------------------- 
