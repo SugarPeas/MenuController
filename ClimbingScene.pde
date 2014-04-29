@@ -13,11 +13,11 @@ boolean climbing = false;
 
 //controls playing video
 int savedPlayTime;
-int playTime = 10000;
+int playTime = 20000;
 
 //controls pausing video
 int savedPauseTime;
-int pauseTime = 20000;
+int pauseTime = 10000;
 
 //controls fading overlay
 int savedOverlayTime;
@@ -61,7 +61,7 @@ void begin()
   gifX = (displayWidth - gifAnimation[0].width) / 2;
   gifY = (displayHeight - gifAnimation[0].height) / 2;
   
-  //timers
+  //start timers
   savedPauseTime = millis();
   savedOverlayTime = millis();
   savedGifTime = millis();
@@ -98,7 +98,7 @@ void draw()
             fadeIn = true; 
             
             //restart timers
-            savedPlayTime = millis();
+            savedPauseTime = millis();
             savedOverlayTime = millis();
             savedGifTime = millis();
          }
@@ -130,10 +130,11 @@ void draw()
 
 void overlay(String fade)
 {
-    //overlay
+    //handles fading in and out
     if(fade == "fadeIn" && overlayTransparency + 10 <= 180){ overlayTransparency += 10; }
     else if(fade == "fadeOut" && overlayTransparency - 10 >= 0){ overlayTransparency -= 10; }
     
+    //show overlay
     fill(255, 255, 255, overlayTransparency);
     rect(0, 0, displayWidth, displayHeight); 
 }

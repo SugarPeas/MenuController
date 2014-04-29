@@ -67,7 +67,7 @@ void begin()
 void draw()
 { 
       
-    processSerial();
+    //processSerial();
   
     //make sure panoramic shows up
     tint(255, 255);
