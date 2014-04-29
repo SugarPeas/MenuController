@@ -9,7 +9,7 @@ class PanoScene extends BaseScene{
 //----------------------------------------
 
 //  ----------Serial stuff----------
-int numSensors = 3;  // we will be expecting for reading data from three sensors
+int numSensors = 3;    // we will be expecting for reading data from three sensors
 float[] sensors;       // array to read the 4 values
 float[] pSensors;      // array to store the previuos reading, usefur for comparing
 
@@ -68,6 +68,7 @@ void begin()
   //used to center animation
   gifX = (displayWidth - gifAnimation[0].width) / 2;
   gifY = (displayHeight - gifAnimation[0].height) / 2;
+  redraw();  
 }
   
   
@@ -76,7 +77,8 @@ void begin()
 //----------------------------------------
 void draw()
 {
-    userInteraction();
+    
+    //userInteraction();
   
     //make sure panoramic shows up
     tint(255, 255);
@@ -112,6 +114,7 @@ void draw()
       if(rectTransparency - 10 >= 0){ rectTransparency -= 10; }
       else{ rectTransparency = 0; }
     }
+    loop();
 }
   
     
@@ -119,7 +122,6 @@ void draw()
 //---------------------------------------- 
 //HANDLES ARDUINO INTERACTION
 //----------------------------------------
-
 void userInteraction(){
   if(panoPort.available() > 0){  
     String myString = panoPort.readStringUntil('\n');
@@ -270,7 +272,8 @@ void texturedSphere(float r, PImage t)
 //----------------------------------------
 void mousePress() 
 {
-  setScene(0);
+  println("pano scene mouse");
+  advanceScene();
 }
 
 }//end class

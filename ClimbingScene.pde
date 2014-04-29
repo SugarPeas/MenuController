@@ -14,6 +14,8 @@ ClimbingScene(PApplet pa){ super(pa); }
 //----------------------------------------
 void begin()
 { 
+  println("climb begin");
+  
   //video init and setup
   myMovie = new JMCMovie(parent, "climbing.mov", RGB);
   myMovie.play();
@@ -35,6 +37,8 @@ void begin()
   savedPauseTime = millis();
   savedOverlayTime = millis();
   savedGifTime = millis();
+  draw();
+  println("climb begin end");
 }
   
   
@@ -46,6 +50,7 @@ void draw()
 {
     super.draw();
     interactiveVideo();
+    loop();
 }
  
 
@@ -79,14 +84,15 @@ void userInteraction()
 }//end userInteraction
 
 
-
 //---------------------------------------- 
 //ADVANCE TO NEXT SCENE - PANORAMIC
 //----------------------------------------
 void mousePress() 
 {
-  myMovie.dispose();
-  setScene(3);
+//  myMovie.dispose();
+//  setScene(3);
+    println("climb scene mouse");
+    advanceScene();
 }
   
 }//end class

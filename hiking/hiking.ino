@@ -15,19 +15,20 @@ void setup() {
 
 void loop() {
   // read the sensor and store it in the variable sensorReading:
-  sensorReading = analogRead(knockSensor);    
- // Serial.println(sensorReading);
-  //Serial.println(previousReading);
-  //Serial.println(abs(previousReading - sensorReading));
-  if(previousReading == 0){
-      previousReading = sensorReading;
-  }else{
-   if(abs(previousReading - sensorReading) > 50){
-      Serial.println("WHAM!");  
-   }
-   previousReading = sensorReading;
-  }
+//  sensorReading = analogRead(knockSensor);    
+// // Serial.println(sensorReading);
+//  //Serial.println(previousReading);
+//  //Serial.println(abs(previousReading - sensorReading));
+//  if(previousReading == 0){
+//      previousReading = sensorReading;
+//  }else{
+//   if(abs(previousReading - sensorReading) > 50){
+//      Serial.println("WHAM!");  
+//   }
+//   previousReading = sensorReading;
+//  }
  // Serial.println("----");
 
-  delay(100);  // delay to avoid overloading the serial port buffer
+  delay(5000);  // delay to avoid overloading the serial port buffer
+  Serial.println("WHAM");
 }

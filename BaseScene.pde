@@ -69,7 +69,11 @@ void draw()
     //if near the end of video, fade out
     else if(myMovie.getDuration() - myMovie.getCurrentTime() < 1 && (movieTransparency - 10) >= 0 ){ movieTransparency -= 10; }
     //if reached end of video, go to next scene
-    else if(myMovie.getCurrentTime() == myMovie.getDuration()){ mousePress(); }
+    else if(myMovie.getCurrentTime() == myMovie.getDuration()){
+      println("scene over, advance"); 
+      mousePress(); 
+    }
+    redraw();
 }
 
 
@@ -171,7 +175,9 @@ void playGIF(String fade)
   else{ gifFrame = 0; }   
 }
 
-
+void mousePress(){
+  advanceScene();
+}
 //---------------------------------------- 
 //HANDLES ARDUINO INTERACTION
 //----------------------------------------
@@ -180,10 +186,14 @@ void userInteraction()
 
 }
 
+JMCMovie getMovie(){
+  return myMovie;
+}
+
  
 //---------------------------------------------
 //HANDLES MOUSE CLICK - DISPLAY THE NEXT SCENE
 //--------------------------------------------- 
-void mousePress() { setScene(0); }
+
 
 }//end class
