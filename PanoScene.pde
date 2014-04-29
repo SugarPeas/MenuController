@@ -9,7 +9,7 @@ class PanoScene extends BaseScene{
 //----------------------------------------
 
 //  ----------Serial stuff----------
-int numSensors = 3;   // we will be expecting for reading data from four sensors
+int numSensors = 3;  // we will be expecting for reading data from three sensors
 float[] sensors;       // array to read the 4 values
 float[] pSensors;      // array to store the previuos reading, usefur for comparing
 
@@ -76,7 +76,7 @@ void begin()
 //----------------------------------------
 void draw()
 {
-    //processSerial();
+    userInteraction();
   
     //make sure panoramic shows up
     tint(255, 255);
@@ -99,7 +99,7 @@ void draw()
     //needed for 2d      
     camera();
     hint(DISABLE_DEPTH_TEST);
-    playGIF("");
+    gifController();
     
     
     //fade in at beginning of scene
@@ -119,10 +119,11 @@ void draw()
 //---------------------------------------- 
 //HANDLES ARDUINO INTERACTION
 //----------------------------------------
-void processSerial()
-{
+
+void userInteraction(){
   if(panoPort.available() > 0){  
     String myString = panoPort.readStringUntil('\n');
+    
     
     // if you got any bytes other than the linefeed:
     if (myString != null) {
@@ -144,9 +145,13 @@ void processSerial()
         }
       }
   
-    }
-      
-  } //end if
+    } 
+  }
+}
+
+
+void gifController(){
+  playGIF("");
 }
     
     
