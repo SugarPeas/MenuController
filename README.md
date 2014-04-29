@@ -3,7 +3,7 @@ Wanderlust
 
 ### An immersive experience designed to encourage travel through interaction with physical objects.
 
-In an all encompassing audio-visual environment, users will be able to travel to a completely different part of the world and live vicariously through our exhibit. The user will walk into a dark, enclosed projection screen setup with four installation kiosks to interact with. The user progresses through a vacation travel experience by interacting with each of the tangible items reminiscent to something in the environment.
+In an all encompassing audio-visual environment, users will be able to travel to a completely different part of the world and live vicariously through our exhibit. The user will walk into a dark, enclosed projection screen setup with three installation kiosks to interact with. The user progresses through a vacation travel experience by interacting with each of the tangible items reminiscent to something in the environment.
 
 Wanderlust is a project being developed for the New Media Team Project at the Rochester Institute of Technology. If you'd like to learn more about the project please see our [development blog](http://sugarpeas.cias.rit.edu/#home).
 
