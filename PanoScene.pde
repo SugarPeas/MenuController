@@ -58,6 +58,15 @@ void begin()
   pushBack = height;
   initializeSphere(sDetail);
   sphere_tex = loadImage("pano.jpg");
+  
+  //animation init and setup
+  gifAnimation = Gif.getPImages(parent, "pano.gif");
+  gifFrame = 0;
+  gifTransparency = 100;
+   
+  //used to center animation
+  gifX = (displayWidth - gifAnimation[0].width) / 2;
+  gifY = (displayHeight - gifAnimation[0].height) / 2;
 }
   
   
@@ -87,14 +96,14 @@ void draw()
       save("coolpic.jpg");
     }
   
-  
+    //needed for 2d      
+    camera();
+    hint(DISABLE_DEPTH_TEST);
+    playGIF("");
+    
+    
     //fade in at beginning of scene
     if( millis() - startTime < 2000 ){
-      
-      //needed for the overlay to show up      
-      camera();
-      hint(DISABLE_DEPTH_TEST);
-      
       //black overlay
       fill(0, 0, 0, rectTransparency);
       rect(0, 0, displayWidth, displayHeight); 

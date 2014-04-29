@@ -59,7 +59,7 @@ void draw()
 //----------------------------------------
 void playGIF(String fade)
 {   
-  
+  println("play gif");
   //fade in
   if(fade == "fadeIn"){ 
     if( gifTransparency + 10 > 180 ){ gifTransparency = 180; }
