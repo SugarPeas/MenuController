@@ -9,7 +9,7 @@ class PanoScene extends BaseScene{
 //----------------------------------------
 
 //  ----------Serial stuff----------
-int numSensors = 3;  // we will be expecting for reading data from four sensors
+int numSensors = 3;   // we will be expecting for reading data from four sensors
 float[] sensors;       // array to read the 4 values
 float[] pSensors;      // array to store the previuos reading, usefur for comparing
 

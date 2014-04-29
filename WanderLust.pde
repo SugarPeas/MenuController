@@ -21,7 +21,7 @@ String portHike = Serial.list()[2];  //7 = 14211
 
 //handles various scenes 
 BaseScene[] scenes = new BaseScene[4];
-int currentScene = 3;
+int currentScene = 0;
 
 //display sketch full screen
 boolean sketchFullScreen() {return true;}
