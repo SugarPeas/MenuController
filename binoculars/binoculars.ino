@@ -15,15 +15,19 @@
 int potPin1 = 2;    // select the input pin for the potentiometer
 int potPin2 = 3;
 int buttonPin = 1;
-int val = 0;       // variable to store the value coming from the sensor
-int val2 = 0;
-int val3 = 0;
+int val = 100;       // variable to store the value coming from the sensor
+int val2 = 200;
+int val3 = 500;
+int counter = 0;
 
-float maxVal = 1023;
+int maxVal = 1023;
 
 long previousTime = 0; // last time we checked
 unsigned long currentTime; // current time
 long interval = 50; // interval at which to check - might need to play around with this
+
+String dataSend;
+String previousData;
 
 void setup() {
   Serial.begin(9600);
@@ -36,15 +40,36 @@ void loop() {
   // if the difference between the current time and the last time we checked is bigger than the interval...
   if(currentTime - previousTime > interval) {
     
-    val = analogRead(potPin1);    // read the value from the sensor
-    val2 = analogRead(potPin2);
-    val3 = analogRead(buttonPin);
-    Serial.print(val);
-    Serial.print(",");
-    Serial.print(val2);
-    Serial.print(",");
-    Serial.println(val3);
+//    val = analogRead(potPin1);    // read the value from the sensor
+//    val2 = analogRead(potPin2);
+//    val3 = analogRead(buttonPin);
+    if(counter < 1024){
+      counter+=5;
+    }else{
+      counter = 0;
+    }
+    val = counter;
+    val2 = counter;
+    val3 = maxVal;
+    
+    dataSend = String(counter);
+    dataSend = dataSend + ",";
+    dataSend = dataSend + String(counter);
+    dataSend = dataSend + ",";
+    dataSend = dataSend + String(maxVal);
+    if(dataSend != previousData){
+      Serial.println(dataSend);
+      previousData = dataSend;
+    }
+    
+    
+    //Serial.print(val);
+    //Serial.print(",");
+    //Serial.print(val2);
+    //Serial.print(",");
+    //Serial.println(val3);
     // update previousTime
     previousTime = currentTime;  
   }
+  
 }
