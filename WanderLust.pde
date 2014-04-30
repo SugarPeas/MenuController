@@ -66,11 +66,9 @@ void draw(){ scenes[currentScene].draw(); }
 //----------------------------------------
 //DISPLAY THE NEXT SCENE
 //----------------------------------------
-void advanceScene(){  
-  if(currentScene <=2){ currentScene += 1; }
-  else{ currentScene = 0; }
-  
-  scenes[currentScene].begin(); 
+void setScene(int id){
+  currentScene = id;
+  scenes[id].begin(); 
 }
 
 

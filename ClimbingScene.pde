@@ -9,9 +9,6 @@ class ClimbingScene extends BaseScene{
 ClimbingScene(PApplet pa){ super(pa); }
 
 
-float progressY;
-
-
 //---------------------------------------- 
 //SCENE SETUP
 //----------------------------------------
@@ -28,7 +25,6 @@ void begin()
   //animation init and setup
   gifAnimation = Gif.getPImages(parent, "climbing.gif");
   gifFrame = 0;
-  gifTransparency = 0;
    
   //used to center animation
   gifX = (displayWidth - gifAnimation[0].width) / 2;
@@ -38,6 +34,7 @@ void begin()
   savedPauseTime = millis();
   savedFadeTime = millis();
   
+  //init for video progress bar
   progressY = displayHeight - 60;
 }
   
@@ -50,23 +47,7 @@ void draw()
 {
     background(0);
     interactiveVideo();
-    
-
-    //calculate progress bar location
-    progressY = lerp( (float)displayHeight-60 , 60.0, (float)myMovie.getPlaybackPercentage() );
-    
-    //progress bar
-    fill(255, 150);
-    stroke(255);
-    strokeWeight(2);
-    line(displayWidth-60, 60, displayWidth-60, displayHeight-60);
-    ellipse(displayWidth - 60, progressY, 30, 30);
-    
     super.draw();
-  
-  
-    
-    
 }
  
 
@@ -104,7 +85,7 @@ void userInteraction()
 void mousePress() 
 {  
   myMovie.dispose();
-  advanceScene();
+  setScene(3);
 }
   
 }//end class

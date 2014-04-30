@@ -26,7 +26,6 @@ void begin()
   //animation init and setup
   gifAnimation = Gif.getPImages(parent, "hiking.gif");
   gifFrame = 0;
-  gifTransparency = 0;
    
   //used to center animation
   gifX = (displayWidth - gifAnimation[0].width) / 2;
@@ -35,7 +34,9 @@ void begin()
   //start timers
   savedPauseTime = millis();
   savedFadeTime = millis();
-  //savedGifTime = millis();
+  
+  //init for video progress bar
+  progressY = displayHeight - 60;
 }
   
   
@@ -80,8 +81,8 @@ void userInteraction()
 //----------------------------------------
 void mousePress() 
 {
-  myMovie.dispose();
-  advanceScene();
+  myMovie.dispose(); 
+  setScene(2);
 }
   
 }//end class
