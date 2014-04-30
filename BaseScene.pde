@@ -18,11 +18,11 @@ float movieTransparency = 0;
 
 //controls playing video
 int savedPlayTime;
-int playTime = 20000;
+int playTime = 10000;
 
 //controls pausing video
 int savedPauseTime;
-int pauseTime = 10000;
+int pauseTime = 5000;
 
 //used to display instruction animations
 PImage[] gifAnimation;
@@ -30,15 +30,19 @@ int gifFrame;
 float gifX;
 float gifY;
 
-//is user interacting?
-boolean working = false;
-
 //controls fading overlay & gif
+boolean fadeIn = true;
 int savedFadeTime;
 int fadeTime = 2000;
 float overlayTransparency = 0;
-float gifTransparency;
-boolean fadeIn = true;
+float gifTransparency = 0;
+
+//controls video progress bar
+float progressY;
+float progressTransparency = 0;
+
+//is user interacting?
+boolean working = false;
  
  
 //----------------------------------------
@@ -57,13 +61,20 @@ void begin(){ }
 //DISPLAY THE SCENE
 //----------------------------------------
 void draw()
-{   
+{       
     //if near beginning of video, fade in
-    if(myMovie.getCurrentTime() < 1 && (movieTransparency + 15) <= 255){ movieTransparency += 15; }
+    if(myMovie.getCurrentTime() < 1){
+        if(movieTransparency + 50 > 255){ movieTransparency = 255; }
+        else{ movieTransparency += 50; }
+    }
     //if near the end of video, fade out
-    else if(myMovie.getDuration() - myMovie.getCurrentTime() < 1 && (movieTransparency - 15) >= 0 ){ movieTransparency -= 15; }
+    else if(myMovie.getDuration() - myMovie.getCurrentTime() < 1){
+        if(movieTransparency - 50 < 0){ movieTransparency = 0; }
+        else{ movieTransparency -= 50; }
+    }
+    
     //if reached end of video, go to next scene
-    else if(myMovie.getCurrentTime() == myMovie.getDuration()){ mousePress(); }
+    if(myMovie.getCurrentTime() == myMovie.getDuration()){ mousePress(); }
 }
 
 
@@ -71,15 +82,15 @@ void draw()
 //HANDLES VIDEO INTERACTION
 //----------------------------------------
 void interactiveVideo()
-{
+{  
     //waiting for user interaction...
-    if(!working){
-      
+    if(working == false){
+            
         //give user time to respond, if they don't pause the video
         if(millis() - savedPauseTime > pauseTime){ myMovie.pause(); }
         //slow down the video
         else{
-            if(myMovie.getRate() - 0.01 > 0.2){ myMovie.changeRate(-0.01); }
+            if(myMovie.getRate() - 0.05 > 0.2){ myMovie.changeRate(-0.05); }
         }
         
         //wait for user interaction to trigger next section
@@ -88,7 +99,10 @@ void interactiveVideo()
     //playing next chunk of video
     else if(working){
       
-        //play 5 seconds then wait for user interaction again
+        //clear out the serial buffer 
+        if(millis() - savedPlayTime < playTime - 1000){ clearPort(); }
+        
+        //play 10 seconds then wait for user interaction again
         if(millis() - savedPlayTime > playTime){  
             //stop climbing
             working = false;
@@ -97,7 +111,7 @@ void interactiveVideo()
             //restart timers
             savedPauseTime = millis();
             savedFadeTime = millis();
-         }
+        }
         //speed video back up
         else{
             if(myMovie.getRate() + 0.01 < 1.0){ myMovie.changeRate(0.01); }
@@ -105,11 +119,22 @@ void interactiveVideo()
         
         //restart video if paused
         if(myMovie.isPlaying() == false){ myMovie.play(); } 
-    }
         
-    //show frame
+    }
+            
+        
+    //show video frame
     tint(255, movieTransparency);
     image(myMovie, movieX, movieY);
+    
+    
+    //fade in progress bar
+    if(myMovie.getCurrentTime() < 1){ progressBar("fadeIn"); }
+    //fade out progress bar
+    else if(myMovie.getDuration() - myMovie.getCurrentTime() < 1){ progressBar("fadeOut"); }
+    //else display progress bar
+    else{ progressBar(""); }
+    
     
     // fade/show overlay & gif
     if(millis() - savedFadeTime < fadeTime && fadeIn){ 
@@ -124,7 +149,34 @@ void interactiveVideo()
         overlay("");
         playGIF(""); 
     }
+}
+
+
+//------------------------------------------ 
+//FADES AND DISPLAYS THE VIDEO PROGRESS BAR
+//------------------------------------------
+void progressBar(String fade)
+{
+    //handles fading in and out
+    if(fade == "fadeIn"){ 
+      if( progressTransparency + 25 > 175 ){ progressTransparency = 175; }
+      else{ progressTransparency += 25; }
+    }
+    else if(fade == "fadeOut"){ 
+      if( progressTransparency - 25 < 0.0 ){ progressTransparency = 0.0; }
+      else{ progressTransparency -= 25; }
+    }
+  
+    //calculate progress bar location
+    progressY = lerp( (float)displayHeight-60 , 60.0, (float)myMovie.getPlaybackPercentage() );
     
+    //progress bar
+    fill(255, progressTransparency);
+    stroke(255, progressTransparency);
+    strokeWeight(2);
+    strokeCap(ROUND);
+    line(displayWidth-60, 60, displayWidth-60, displayHeight-60);
+    ellipse(displayWidth - 60, progressY, 30, 30);
 }
 
 
@@ -135,12 +187,12 @@ void overlay(String fade)
 {
     //handles fading in and out
     if(fade == "fadeIn"){ 
-      if( overlayTransparency + 10 > 180 ){ overlayTransparency = 180; }
-      else{ overlayTransparency += 10; }
+      if( overlayTransparency + 25 > 125 ){ overlayTransparency = 125; }
+      else{ overlayTransparency += 25; }
     }
     else if(fade == "fadeOut"){ 
-      if( overlayTransparency - 10 < 0.0 ){ overlayTransparency = 0.0; }
-      else{ overlayTransparency -= 10; }
+      if( overlayTransparency - 25 < 0.0 ){ overlayTransparency = 0.0; }
+      else{ overlayTransparency -= 25; }
     }
     
     //show overlay
@@ -177,6 +229,11 @@ void playGIF(String fade)
 
 
 //---------------------------------------- 
+//CLEARS SERIAL PORT BUFFER
+//----------------------------------------
+void clearPort(){ }
+
+//---------------------------------------- 
 //HANDLES ARDUINO INTERACTION
 //----------------------------------------
 void userInteraction(){ }
@@ -185,7 +242,7 @@ void userInteraction(){ }
 //---------------------------------------------
 //HANDLES MOUSE CLICK - DISPLAY THE NEXT SCENE
 //--------------------------------------------- 
-void mousePress(){ advanceScene(); }
+void mousePress(){ setScene(0); }
 
 
 }//end class

@@ -284,9 +284,6 @@ void texturedSphere(float r, PImage t)
 //---------------------------------------- 
 //ADVANCE TO NEXT SCENE - MONTAGE
 //----------------------------------------
-void mousePress() 
-{
-  advanceScene();
-}
+void mousePress(){ setScene(0); }
 
 }//end class

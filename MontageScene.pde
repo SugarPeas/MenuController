@@ -19,6 +19,7 @@ void begin()
   myMovie = new JMCMovie(parent, "introMontage.mp4", RGB);
   myMovie.play();
   
+  //used to center video
   movieX = (displayWidth - 1280) / 2;
   movieY = (displayHeight - 720) / 2;
 }
@@ -43,8 +44,8 @@ void draw()
 //----------------------------------------
 void mousePress() 
 {
-  myMovie.dispose();
-  advanceScene();
+  myMovie.dispose(); 
+  setScene(1);
 }
   
 }//end class
