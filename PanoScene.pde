@@ -16,7 +16,6 @@ float[] pSensors;      // array to store the previuos reading, usefur for compar
 float xPot;
 float yPot;
 boolean button = false;
-float maxVal = 1023;
 
 //----------3D sphere stuff----------
 PImage sphere_tex;
@@ -29,7 +28,9 @@ float yOffset = 2.75; //to adjust intial position
 
 int sDetail = 50;  // Sphere detail setting
 float pushBack = 0; // z coordinate of the center of the sphere
-float factor = 0.99; // magnification factor
+float defaultPushBack;
+float maxZoom = 100;
+int zoomSpeed = 20;
 
 float[] sphereX, sphereY, sphereZ;
 float sinLUT[];
@@ -56,6 +57,7 @@ void begin()
   startTime = millis(); //get starting time
   
   pushBack = height;
+  defaultPushBack = pushBack;
   initializeSphere(sDetail);
 
   sphere_tex = loadImage("pano.jpg");
@@ -76,7 +78,12 @@ void begin()
 //----------------------------------------
 void draw()
 {
-    //userInteraction();
+    userInteraction();
+    if(button == true){
+      zoomIn();
+    }else{
+      zoomOut();
+    }
   
     //make sure panoramic shows up
     tint(255, 255);
@@ -92,9 +99,7 @@ void draw()
     //draw texture to sphere
     texturedSphere(pushBack, sphere_tex);
     
-    if(button == true){
-      save("coolpic.jpg");
-    }
+    
   
     //needed for 2d      
     camera();
@@ -113,6 +118,17 @@ void draw()
       else{ rectTransparency = 0; }
     }
 }
+
+void zoomIn(){
+  if(pushBack + zoomSpeed <= defaultPushBack + maxZoom){ 
+    pushBack += zoomSpeed; 
+  }
+}
+void zoomOut(){
+  if(pushBack - zoomSpeed >= defaultPushBack){
+    pushBack -= zoomSpeed;
+  }
+}
   
     
   
@@ -120,7 +136,8 @@ void draw()
 //HANDLES ARDUINO INTERACTION
 //----------------------------------------
 void userInteraction(){
-  if(panoPort.available() > 0){  
+  if(panoPort.available() > 0){ 
+    float maxVal = 1023;
     String myString = panoPort.readStringUntil('\n');
     
     
