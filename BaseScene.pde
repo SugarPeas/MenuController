@@ -18,11 +18,11 @@ float movieTransparency = 0;
 
 //controls playing video
 int savedPlayTime;
-int playTime = 20000;
+int playTime = 10000;
 
 //controls pausing video
 int savedPauseTime;
-int pauseTime = 10000;
+int pauseTime = 5000;
 
 //used to display instruction animations
 PImage[] gifAnimation;
@@ -82,15 +82,15 @@ void draw()
 //HANDLES VIDEO INTERACTION
 //----------------------------------------
 void interactiveVideo()
-{
+{  
     //waiting for user interaction...
-    if(!working){
-      
+    if(working == false){
+            
         //give user time to respond, if they don't pause the video
         if(millis() - savedPauseTime > pauseTime){ myMovie.pause(); }
         //slow down the video
         else{
-            if(myMovie.getRate() - 0.01 > 0.2){ myMovie.changeRate(-0.01); }
+            if(myMovie.getRate() - 0.05 > 0.2){ myMovie.changeRate(-0.05); }
         }
         
         //wait for user interaction to trigger next section
@@ -99,7 +99,10 @@ void interactiveVideo()
     //playing next chunk of video
     else if(working){
       
-        //play 5 seconds then wait for user interaction again
+        //clear out the serial buffer 
+        if(millis() - savedPlayTime < playTime - 1000){ clearPort(); }
+        
+        //play 10 seconds then wait for user interaction again
         if(millis() - savedPlayTime > playTime){  
             //stop climbing
             working = false;
@@ -108,7 +111,7 @@ void interactiveVideo()
             //restart timers
             savedPauseTime = millis();
             savedFadeTime = millis();
-         }
+        }
         //speed video back up
         else{
             if(myMovie.getRate() + 0.01 < 1.0){ myMovie.changeRate(0.01); }
@@ -116,11 +119,11 @@ void interactiveVideo()
         
         //restart video if paused
         if(myMovie.isPlaying() == false){ myMovie.play(); } 
+        
     }
+            
         
-        
-    //show frame
-    stroke(0);
+    //show video frame
     tint(255, movieTransparency);
     image(myMovie, movieX, movieY);
     
@@ -224,6 +227,11 @@ void playGIF(String fade)
   else{ gifFrame = 0; }   
 }
 
+
+//---------------------------------------- 
+//CLEARS SERIAL PORT BUFFER
+//----------------------------------------
+void clearPort(){ }
 
 //---------------------------------------- 
 //HANDLES ARDUINO INTERACTION

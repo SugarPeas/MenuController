@@ -52,20 +52,26 @@ void draw()
  
 
 //---------------------------------------- 
+//CLEARS SERIAL PORT BUFFER
+//----------------------------------------
+void clearPort(){ climbPort.clear(); }
+
+
+//---------------------------------------- 
 //HANDLES ARDUINO INTERACTION
 //----------------------------------------
 void userInteraction()
 {
+  
   //wait for user to trigger next section
-  //if data is available...
   if(climbPort.available() > 0){  
       val = climbPort.readStringUntil('\n'); //store data
-      
+          
       if(val != null){ 
         
           //if rotary encoder is turning, trigger climbing action
           if(val.trim().equals("climb")){ 
-              
+                            
               //start playing video
               working = true;
               fadeIn = false;

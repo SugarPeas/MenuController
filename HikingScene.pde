@@ -53,6 +53,15 @@ void draw()
  
  
 //---------------------------------------- 
+//CLEARS SERIAL PORT BUFFER
+//----------------------------------------
+void clearPort()
+{ 
+  //hikePort.clear(); 
+}
+
+
+//---------------------------------------- 
 //HANDLES ARDUINO INTERACTION
 //----------------------------------------
 void userInteraction()
