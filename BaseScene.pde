@@ -30,18 +30,14 @@ int gifFrame;
 float gifX;
 float gifY;
 
-//controls fading gif
-int savedGifTime;
-int gifTime = 2000;
-float gifTransparency;
-
 //is user interacting?
 boolean working = false;
 
-//controls fading overlay
-int savedOverlayTime;
-int overlayTime = 2000;
+//controls fading overlay & gif
+int savedFadeTime;
+int fadeTime = 2000;
 float overlayTransparency = 0;
+float gifTransparency;
 boolean fadeIn = true;
  
  
@@ -100,8 +96,7 @@ void interactiveVideo()
             
             //restart timers
             savedPauseTime = millis();
-            savedOverlayTime = millis();
-            savedGifTime = millis();
+            savedFadeTime = millis();
          }
         //speed video back up
         else{
@@ -116,15 +111,20 @@ void interactiveVideo()
     tint(255, movieTransparency);
     image(myMovie, movieX, movieY);
     
-    // fade/show overlay
-    if(millis() - savedOverlayTime < overlayTime && fadeIn){ overlay("fadeIn"); }
-    else if(millis() - savedOverlayTime < overlayTime && !fadeIn){ overlay("fadeOut"); }
-    else{ overlay(""); }
+    // fade/show overlay & gif
+    if(millis() - savedFadeTime < fadeTime && fadeIn){ 
+        overlay("fadeIn"); 
+        playGIF("fadeIn"); 
+    }
+    else if(millis() - savedFadeTime < fadeTime && !fadeIn){ 
+        overlay("fadeOut"); 
+        playGIF("fadeOut");
+    }
+    else{ 
+        overlay("");
+        playGIF(""); 
+    }
     
-    // fade/play instructional gif
-    if(millis() - savedGifTime < gifTime && fadeIn){ playGIF("fadeIn"); }
-    else if(millis() - savedGifTime < gifTime && !fadeIn){ playGIF("fadeOut"); }
-    else{ playGIF(" "); }
 }
 
 
@@ -134,8 +134,14 @@ void interactiveVideo()
 void overlay(String fade)
 {
     //handles fading in and out
-    if(fade == "fadeIn" && overlayTransparency + 10 <= 180){ overlayTransparency += 10; }
-    else if(fade == "fadeOut" && overlayTransparency - 10 >= 0){ overlayTransparency -= 10; }
+    if(fade == "fadeIn"){ 
+      if( overlayTransparency + 10 > 180 ){ overlayTransparency = 180; }
+      else{ overlayTransparency += 10; }
+    }
+    else if(fade == "fadeOut"){ 
+      if( overlayTransparency - 10 < 0.0 ){ overlayTransparency = 0.0; }
+      else{ overlayTransparency -= 10; }
+    }
     
     //show overlay
     fill(255, 255, 255, overlayTransparency);

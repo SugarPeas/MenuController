@@ -9,6 +9,9 @@ class ClimbingScene extends BaseScene{
 ClimbingScene(PApplet pa){ super(pa); }
 
 
+float progressY;
+
+
 //---------------------------------------- 
 //SCENE SETUP
 //----------------------------------------
@@ -33,8 +36,9 @@ void begin()
   
   //start timers
   savedPauseTime = millis();
-  savedOverlayTime = millis();
-  savedGifTime = millis();
+  savedFadeTime = millis();
+  
+  progressY = displayHeight - 60;
 }
   
   
@@ -44,9 +48,25 @@ void begin()
 //----------------------------------------
 void draw()
 {
-  background(0);
-  interactiveVideo();
-  super.draw();
+    background(0);
+    interactiveVideo();
+    
+
+    //calculate progress bar location
+    progressY = lerp( (float)displayHeight-60 , 60.0, (float)myMovie.getPlaybackPercentage() );
+    
+    //progress bar
+    fill(255, 150);
+    stroke(255);
+    strokeWeight(2);
+    line(displayWidth-60, 60, displayWidth-60, displayHeight-60);
+    ellipse(displayWidth - 60, progressY, 30, 30);
+    
+    super.draw();
+  
+  
+    
+    
 }
  
 
@@ -71,8 +91,7 @@ void userInteraction()
               
               //restart timers
               savedPlayTime = millis();
-              savedOverlayTime = millis();
-              savedGifTime = millis();
+              savedFadeTime = millis();
           } 
       }
   }
@@ -83,9 +102,7 @@ void userInteraction()
 //ADVANCE TO NEXT SCENE - PANORAMIC
 //----------------------------------------
 void mousePress() 
-{
-  println("climb mousePress");
-  
+{  
   myMovie.dispose();
   advanceScene();
 }

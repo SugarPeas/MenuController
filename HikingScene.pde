@@ -34,8 +34,8 @@ void begin()
   
   //start timers
   savedPauseTime = millis();
-  savedOverlayTime = millis();
-  savedGifTime = millis();
+  savedFadeTime = millis();
+  //savedGifTime = millis();
 }
   
   
@@ -68,8 +68,7 @@ void userInteraction()
 //          
 //          //restart timers
 //          savedPlayTime = millis();
-//          savedOverlayTime = millis();
-//          savedGifTime = millis();
+//          savedFadeTime = millis();
 //      }
 //  }
 }
