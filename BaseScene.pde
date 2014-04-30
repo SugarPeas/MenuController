@@ -61,19 +61,13 @@ void begin(){ }
 //DISPLAY THE SCENE
 //----------------------------------------
 void draw()
-{ 
-    background(0);
-    
+{   
     //if near beginning of video, fade in
-    if(myMovie.getCurrentTime() < 1 && (movieTransparency + 10) <= 255){ movieTransparency += 10; }
+    if(myMovie.getCurrentTime() < 1 && (movieTransparency + 15) <= 255){ movieTransparency += 15; }
     //if near the end of video, fade out
-    else if(myMovie.getDuration() - myMovie.getCurrentTime() < 1 && (movieTransparency - 10) >= 0 ){ movieTransparency -= 10; }
+    else if(myMovie.getDuration() - myMovie.getCurrentTime() < 1 && (movieTransparency - 15) >= 0 ){ movieTransparency -= 15; }
     //if reached end of video, go to next scene
-    else if(myMovie.getCurrentTime() == myMovie.getDuration()){
-      println("scene over, advance"); 
-      mousePress(); 
-    }
-    redraw();
+    else if(myMovie.getCurrentTime() == myMovie.getDuration()){ mousePress(); }
 }
 
 
@@ -130,7 +124,7 @@ void interactiveVideo()
     // fade/play instructional gif
     if(millis() - savedGifTime < gifTime && fadeIn){ playGIF("fadeIn"); }
     else if(millis() - savedGifTime < gifTime && !fadeIn){ playGIF("fadeOut"); }
-    else{ playGIF(""); }
+    else{ playGIF(" "); }
 }
 
 
@@ -175,25 +169,17 @@ void playGIF(String fade)
   else{ gifFrame = 0; }   
 }
 
-void mousePress(){
-  advanceScene();
-}
+
 //---------------------------------------- 
 //HANDLES ARDUINO INTERACTION
 //----------------------------------------
-void userInteraction()
-{
-
-}
-
-JMCMovie getMovie(){
-  return myMovie;
-}
+void userInteraction(){ }
 
  
 //---------------------------------------------
 //HANDLES MOUSE CLICK - DISPLAY THE NEXT SCENE
 //--------------------------------------------- 
+void mousePress(){ advanceScene(); }
 
 
 }//end class

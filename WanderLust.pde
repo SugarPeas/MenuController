@@ -24,7 +24,7 @@ BaseScene[] scenes = new BaseScene[4];
 int currentScene = 0;
 
 //display sketch full screen
-boolean sketchFullScreen() {return true;}
+boolean sketchFullScreen(){return true;}
 
 
 //----------------------------------------
@@ -39,11 +39,11 @@ void setup()
  //setup serial port connections - used to communicate with arduino boards
  climbPort = new Serial(this, portClimb, 9600);
 // panoPort = new Serial(this, portPano, 9600);
- hikePort = new Serial(this, portHike, 9600);
+// hikePort = new Serial(this, portHike, 9600);
  
  climbPort.bufferUntil('\n');
 // panoPort.bufferUntil('\n');
- hikePort.bufferUntil('\n');
+// hikePort.bufferUntil('\n');
  
  //define the scenes
  scenes[0] = new MontageScene(this);
@@ -54,45 +54,27 @@ void setup()
 
  //start the first scene - intro montage video
  scenes[currentScene].begin();
-
 }
 
 
 //----------------------------------------
 //DISPLAYS CURRENT SCENE
 //----------------------------------------
-void draw()
-{
- scenes[currentScene].draw(); 
-}
+void draw(){ scenes[currentScene].draw(); }
 
 
 //----------------------------------------
 //DISPLAY THE NEXT SCENE
 //----------------------------------------
-
-void advanceScene(){
-  println("advance scene");
-  println("currentScene: " + currentScene);
-
-  
-  if(currentScene <=2){
-    JMCMovie curMovie = scenes[currentScene].getMovie();
-    curMovie.dispose();
-    currentScene += 1;
-  }else{
-    currentScene = 0;
-  }
-  println("go to: " + currentScene);
+void advanceScene(){  
+  if(currentScene <=2){ currentScene += 1; }
+  else{ currentScene = 0; }
   
   scenes[currentScene].begin(); 
-  
 }
+
 
 //------------------------------------------
 //HANDLES MOUSE CLICK EVENT
 //------------------------------------------
-void mouseReleased()
-{
-  scenes[currentScene].mousePress();
-}
+void mouseReleased(){ scenes[currentScene].mousePress(); }

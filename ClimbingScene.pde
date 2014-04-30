@@ -8,14 +8,12 @@ class ClimbingScene extends BaseScene{
 //---------------------------------------- 
 ClimbingScene(PApplet pa){ super(pa); }
 
-  
+
 //---------------------------------------- 
 //SCENE SETUP
 //----------------------------------------
 void begin()
-{ 
-  println("climb begin");
-  
+{   
   //video init and setup
   myMovie = new JMCMovie(parent, "climbing.mov", RGB);
   myMovie.play();
@@ -37,8 +35,6 @@ void begin()
   savedPauseTime = millis();
   savedOverlayTime = millis();
   savedGifTime = millis();
-  draw();
-  println("climb begin end");
 }
   
   
@@ -48,9 +44,9 @@ void begin()
 //----------------------------------------
 void draw()
 {
-    super.draw();
-    interactiveVideo();
-    loop();
+  background(0);
+  interactiveVideo();
+  super.draw();
 }
  
 
@@ -77,7 +73,6 @@ void userInteraction()
               savedPlayTime = millis();
               savedOverlayTime = millis();
               savedGifTime = millis();
-              
           } 
       }
   }
@@ -89,10 +84,10 @@ void userInteraction()
 //----------------------------------------
 void mousePress() 
 {
-//  myMovie.dispose();
-//  setScene(3);
-    println("climb scene mouse");
-    advanceScene();
+  println("climb mousePress");
+  
+  myMovie.dispose();
+  advanceScene();
 }
   
 }//end class

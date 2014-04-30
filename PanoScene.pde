@@ -67,8 +67,7 @@ void begin()
    
   //used to center animation
   gifX = (displayWidth - gifAnimation[0].width) / 2;
-  gifY = (displayHeight - gifAnimation[0].height) / 2;
-  redraw();  
+  gifY = (displayHeight - gifAnimation[0].height) / 2;  
 }
   
   
@@ -77,7 +76,6 @@ void begin()
 //----------------------------------------
 void draw()
 {
-    
     //userInteraction();
   
     //make sure panoramic shows up
@@ -114,7 +112,6 @@ void draw()
       if(rectTransparency - 10 >= 0){ rectTransparency -= 10; }
       else{ rectTransparency = 0; }
     }
-    loop();
 }
   
     
@@ -272,7 +269,6 @@ void texturedSphere(float r, PImage t)
 //----------------------------------------
 void mousePress() 
 {
-  println("pano scene mouse");
   advanceScene();
 }
 

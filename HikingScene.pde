@@ -36,7 +36,6 @@ void begin()
   savedPauseTime = millis();
   savedOverlayTime = millis();
   savedGifTime = millis();
-  redraw();
 }
   
   
@@ -46,9 +45,9 @@ void begin()
 //----------------------------------------
 void draw()
 { 
-  super.draw();
+  background(0);
   interactiveVideo();
-  loop();
+  super.draw();
 }
  
  
@@ -58,21 +57,21 @@ void draw()
 void userInteraction()
 { 
   //if data is available...
-  if(hikePort.available() > 0){
-      val = hikePort.readStringUntil('\n'); //store data
-      
-      //trigger next video section
-      if(val != null){ 
-          //start playing video
-          working = true;
-          fadeIn = false;
-          
-          //restart timers
-          savedPlayTime = millis();
-          savedOverlayTime = millis();
-          savedGifTime = millis();
-      } 
-  }
+//  if(hikePort.available() > 0){
+//      val = hikePort.readStringUntil('\n'); //store data
+//      
+//      //trigger next video section
+//      if(val != null){
+//          //start playing video
+//          working = true;
+//          fadeIn = false;
+//          
+//          //restart timers
+//          savedPlayTime = millis();
+//          savedOverlayTime = millis();
+//          savedGifTime = millis();
+//      }
+//  }
 }
 
 
@@ -82,7 +81,7 @@ void userInteraction()
 //----------------------------------------
 void mousePress() 
 {
-  println("hike scene mouse");
+  myMovie.dispose();
   advanceScene();
 }
   

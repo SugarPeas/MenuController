@@ -21,7 +21,6 @@ void begin()
   
   movieX = (displayWidth - 1280) / 2;
   movieY = (displayHeight - 720) / 2;
-  redraw();
 }
 
 
@@ -30,12 +29,12 @@ void begin()
 //----------------------------------------
 void draw()
 {
+  background(0);
   super.draw();
     
   //display frame
   tint(255, movieTransparency);
   image(myMovie, movieX, movieY);
-  loop();
 }
 
 
@@ -44,7 +43,7 @@ void draw()
 //----------------------------------------
 void mousePress() 
 {
-  println("montage scene mouse");
+  myMovie.dispose();
   advanceScene();
 }
   
