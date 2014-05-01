@@ -41,6 +41,8 @@ int SINCOS_LENGTH = int(360.0 / SINCOS_PRECISION);
 //----------Fade In / Timer Stuff----------
 int startTime;
 float rectTransparency = 255;
+int savedIdleTime;
+int idleTime = 7500;
 
 
 //----------------------------------------
@@ -53,9 +55,7 @@ PanoScene(PApplet pa){ super(pa); }
 //SCENE SETUP
 //----------------------------------------
 void begin()
-{ 
-  startTime = millis(); //get starting time
-  
+{   
   pushBack = height;
   defaultPushBack = pushBack;
   initializeSphere(sDetail);
@@ -70,6 +70,11 @@ void begin()
   //used to center animation
   gifX = (displayWidth - gifAnimation[0].width) / 2;
   gifY = (displayHeight - gifAnimation[0].height) / 2;  
+  
+  //start timers
+  startTime = millis();
+  savedIdleTime = millis();
+  savedFadeTime = millis();
 }
   
   
@@ -77,13 +82,19 @@ void begin()
 //DISPLAY THE SCENE
 //----------------------------------------
 void draw()
-{
-    userInteraction();
-    if(button == true){
-      zoomIn();
-    }else{
-      zoomOut();
+{ 
+    //if user has been idle, fade the overlay and gif in
+    if( millis() - savedIdleTime > idleTime ){ 
+      fadeIn = true; 
+      savedFadeTime = millis();
     }
+  
+    //wait for user interaction
+    userInteraction(); 
+
+    //handles zoom in/zoom out
+    if(button == true){ zoomIn(); }
+    else{ zoomOut(); }
   
     //make sure panoramic shows up
     tint(255, 255);
@@ -99,13 +110,10 @@ void draw()
     //draw texture to sphere
     texturedSphere(pushBack, sphere_tex);
     
-    
   
     //needed for 2d      
     camera();
-    hint(DISABLE_DEPTH_TEST);
-    gifController();
-    
+    hint(DISABLE_DEPTH_TEST);    
     
     //fade in at beginning of scene
     if( millis() - startTime < 2000 ){
@@ -117,21 +125,45 @@ void draw()
       if(rectTransparency - 10 >= 0){ rectTransparency -= 10; }
       else{ rectTransparency = 0; }
     }
+    
+    //handles fading overlay & gif
+    if(millis() - savedFadeTime < fadeTime && fadeIn){ 
+        overlay("fadeIn"); 
+        playGIF("fadeIn"); 
+    }
+    else if(millis() - savedFadeTime < fadeTime && !fadeIn){ 
+        overlay("fadeOut"); 
+        playGIF("fadeOut");
+    }
+    else{ 
+        overlay("");
+        playGIF(""); 
+    }
+    
+    
 }
 
+
+//---------------------------------------- 
+//ZOOM IN PANORAMIC VIEW
+//----------------------------------------
 void zoomIn(){
   if(pushBack + zoomSpeed <= defaultPushBack + maxZoom){ 
     pushBack += zoomSpeed; 
   }
 }
+
+
+//---------------------------------------- 
+//ZOOM OUT PANORAMIC VIEW
+//----------------------------------------
 void zoomOut(){
   if(pushBack - zoomSpeed >= defaultPushBack){
     pushBack -= zoomSpeed;
   }
 }
   
-    
-  
+      
 //---------------------------------------- 
 //HANDLES ARDUINO INTERACTION
 //----------------------------------------
@@ -148,6 +180,11 @@ void userInteraction(){
       
       if(m != null){
         
+        //fade out overlay and gif when user starts interacting
+        fadeIn = false;
+        savedFadeTime = millis();
+        savedIdleTime = millis();
+        
         pSensors = sensors;
         sensors = float(split(myString, ','));
   
@@ -163,11 +200,6 @@ void userInteraction(){
   
     } 
   }
-}
-
-
-void gifController(){
-  playGIF("");
 }
     
     
