@@ -18,7 +18,7 @@ float movieTransparency = 0;
 
 //controls playing video
 int savedPlayTime;
-int playTime = 10000;
+int playTime = 5000;
 
 //controls pausing video
 int savedPauseTime;
@@ -119,9 +119,8 @@ void interactiveVideo()
         
         //restart video if paused
         if(myMovie.isPlaying() == false){ myMovie.play(); } 
-        
     }
-            
+    
         
     //show video frame
     tint(255, movieTransparency);
