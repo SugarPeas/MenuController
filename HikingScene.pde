@@ -36,7 +36,7 @@ void begin()
   savedFadeTime = millis();
   
   //init for video progress bar
-  progressY = displayHeight - 60;
+  progressY = displayHeight - 80;
 }
   
   
