@@ -21,7 +21,7 @@ String portHike = Serial.list()[3];  //7 = 14211
 
 //handles various scenes 
 BaseScene[] scenes = new BaseScene[4];
-int currentScene = 3;
+int currentScene = 0;
 
 //display sketch full screen
 boolean sketchFullScreen(){return true;}
@@ -38,12 +38,12 @@ void setup()
  
  //setup serial port connections - used to communicate with arduino boards
  //climbPort = new Serial(this, portClimb, 9600);
- panoPort = new Serial(this, portPano, 9600);
+ //panoPort = new Serial(this, portPano, 9600);
  //hikePort = new Serial(this, portHike, 9600);
  
  //climbPort.bufferUntil('\n');
- panoPort.bufferUntil('\n');
-//hikePort.bufferUntil('\n');
+ //panoPort.bufferUntil('\n');
+ //hikePort.bufferUntil('\n');
  
  //define the scenes
  scenes[0] = new MontageScene(this);

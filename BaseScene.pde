@@ -167,15 +167,15 @@ void progressBar(String fade)
     }
   
     //calculate progress bar location
-    progressY = lerp( (float)displayHeight-60 , 60.0, (float)myMovie.getPlaybackPercentage() );
+    progressY = lerp( (float)displayHeight-80 , 80.0, (float)myMovie.getPlaybackPercentage() );
     
     //progress bar
     fill(255, progressTransparency);
     stroke(255, progressTransparency);
     strokeWeight(2);
     strokeCap(ROUND);
-    line(displayWidth-60, 60, displayWidth-60, displayHeight-60);
-    ellipse(displayWidth - 60, progressY, 30, 30);
+    line(myMovie.width-80, 80, myMovie.width-80, displayHeight-80);
+    ellipse(myMovie.width - 80, progressY, 30, 30);
 }
 
 
