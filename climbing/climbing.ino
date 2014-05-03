@@ -4,6 +4,10 @@
 const int encoderPinA = 2;
 const int encoderPinB = 4;
 
+long previousTime = 0; // last time we checked
+unsigned long currentTime; // current time
+long interval = 100; // interval at which to check - might need to play around with this
+
 int Pos, oldPos;
 volatile int encoderPos = 0; // variables changed within interrupts are volatile
 
@@ -30,11 +34,18 @@ void loop()
   SREG = oldSREG;
   
   if(Pos != oldPos){
+    
+    // get the current time
+    currentTime = millis();
+    
+    if(currentTime - previousTime > interval) {
+      Serial.println("climb"); //send message to processing
+    }
+    
     oldPos = Pos;
-    Serial.println("climb"); //send message to processing
-  }
-  
-  delay(1000);
+    previousTime = currentTime;
+    
+  }  
 }
 
 

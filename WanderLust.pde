@@ -37,11 +37,11 @@ void setup()
  size(displayWidth,displayHeight,P3D);
  
  //setup serial port connections - used to communicate with arduino boards
- //climbPort = new Serial(this, portClimb, 9600);
+ climbPort = new Serial(this, portClimb, 9600);
  //panoPort = new Serial(this, portPano, 9600);
  //hikePort = new Serial(this, portHike, 9600);
  
- //climbPort.bufferUntil('\n');
+ climbPort.bufferUntil('\n');
  //panoPort.bufferUntil('\n');
  //hikePort.bufferUntil('\n');
  

@@ -79,6 +79,8 @@ void userInteraction()
               //restart timers
               savedPlayTime = millis();
               savedFadeTime = millis();
+              
+              clearPort();
           } 
       }
   }
