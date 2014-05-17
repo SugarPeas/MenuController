@@ -15,9 +15,9 @@ import gifAnimation.*;
 Serial climbPort;  
 Serial panoPort;
 Serial hikePort;
-String portClimb = Serial.list()[2]; //9 = 14231
-String portPano = Serial.list()[2];  //8 = 14221
-String portHike = Serial.list()[3];  //7 = 14211
+String portClimb = Serial.list()[11];
+String portPano = Serial.list()[13];
+String portHike = Serial.list()[12];
 
 //handles various scenes 
 BaseScene[] scenes = new BaseScene[4];
@@ -38,12 +38,12 @@ void setup()
  
  //setup serial port connections - used to communicate with arduino boards
  climbPort = new Serial(this, portClimb, 9600);
- //panoPort = new Serial(this, portPano, 9600);
- //hikePort = new Serial(this, portHike, 9600);
+ panoPort = new Serial(this, portPano, 9600);
+ hikePort = new Serial(this, portHike, 9600);
  
  climbPort.bufferUntil('\n');
- //panoPort.bufferUntil('\n');
- //hikePort.bufferUntil('\n');
+ panoPort.bufferUntil('\n');
+ hikePort.bufferUntil('\n');
  
  //define the scenes
  scenes[0] = new MontageScene(this);

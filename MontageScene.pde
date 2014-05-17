@@ -17,11 +17,11 @@ void begin()
 {
   //video init and setup
   myMovie = new JMCMovie(parent, "introMontage.mp4", RGB);
-  myMovie.play();
+  myMovie.loop();
   
   //used to center video
-  movieX = (displayWidth - 1280) / 2;
-  movieY = (displayHeight - 720) / 2;
+  movieX = (displayWidth - 3840) / 2;
+  movieY = (displayHeight - 1024) / 2;
 }
 
 
@@ -35,7 +35,7 @@ void draw()
     
   //display frame
   tint(255, movieTransparency);
-  image(myMovie, movieX, movieY);
+  image(myMovie, 0, 0);
 }
 
 

@@ -1,12 +1,9 @@
-// these constants won't change:
-const int knockSensor = A0; // the piezo is connected to analog pin 0
-const int threshold = 0;  // threshold value to decide when the detected sound is a knock or not
 
 
 // these variables will change:
 int sensorReading = 0;      // variable to store the value read from the sensor pin
 
-int previousReading = 0;
+int previousReading = 100;
 
 
 void setup() {
@@ -15,20 +12,22 @@ void setup() {
 
 void loop() {
   // read the sensor and store it in the variable sensorReading:
-  sensorReading = analogRead(knockSensor);    
-  //Serial.println(sensorReading);
+  sensorReading = analogRead(1); 
   //Serial.println(previousReading);
   //Serial.println(abs(previousReading - sensorReading));
-  if(previousReading == 0){
-      previousReading = sensorReading;
-  }else{
-   if(abs(previousReading - sensorReading) > 50){
-      Serial.println("WHAM!");  
-   }
-   previousReading = sensorReading;
+  if(sensorReading == 0){
+    
+    if(previousReading != 0){
+      
+        Serial.println("WHAM!");
+        delay(1000);
+        
+    }
+    
   }
+  previousReading = sensorReading;
  // Serial.println("----");
 
-  delay(1000);  // delay to avoid overloading the serial port buffer
+//  delay(1000);  // delay to avoid overloading the serial port buffer
   
 }

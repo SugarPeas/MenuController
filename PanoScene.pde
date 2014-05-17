@@ -55,7 +55,9 @@ PanoScene(PApplet pa){ super(pa); }
 //SCENE SETUP
 //----------------------------------------
 void begin()
-{   
+{ 
+  clearPort();
+  
   pushBack = height;
   defaultPushBack = pushBack;
   initializeSphere(sDetail);
@@ -169,7 +171,10 @@ void zoomOut(){
 //----------------------------------------
 void userInteraction(){
   if(panoPort.available() > 0){ 
-    float maxVal = 1023;
+    float yMaxVal = 610;
+    float xMaxVal = 383;
+    float xMinVal = 125;
+    float newMax = xMaxVal - xMinVal;
     String myString = panoPort.readStringUntil('\n');
     
     
@@ -187,11 +192,35 @@ void userInteraction(){
         
         pSensors = sensors;
         sensors = float(split(myString, ','));
-  
-        xPot = (sensors[0]/maxVal) - 0.5;
-        yPot = (sensors[1]/maxVal) - 0.5;
         
-        if((sensors[2]/maxVal)<1){
+//        if(val1 > previousVal + 2 || val1 < previousVal - 2){
+//      
+//          if(val2 > previousVal2 + 2 || val2 < previousVal2 - 2){
+//            
+//                  
+//              previousVal2 = val2;
+//          }
+//          
+//          previousVal = val1;
+//        }
+
+         
+      
+  
+        if(sensors[0] >= yMaxVal){
+          sensors[0] = yMaxVal;
+        }else{
+          yPot = (sensors[0]/yMaxVal) - 0.5;
+        }
+//        xPot = (sensors[1]/xMaxVal) - 0.5;
+        xPot = ((sensors[1]-xMinVal)/newMax) - 0.5;
+        
+        
+        
+        println("y sen: " + sensors[0]);
+        println("x sen: " + sensors[1]);
+        
+        if(sensors[2]>900){
           button = true;
         }else{
           button = false;
@@ -311,11 +340,24 @@ void texturedSphere(float r, PImage t)
   endShape();
   
 } //end texturedSphere
+ 
   
+//---------------------------------------- 
+//CLEARS SERIAL PORT BUFFER
+//----------------------------------------
+void clearPort()
+{ 
+  panoPort.clear(); 
+}
+
 
 //---------------------------------------- 
 //ADVANCE TO NEXT SCENE - MONTAGE
 //----------------------------------------
-void mousePress(){ setScene(0); }
+void mousePress()
+{ 
+  clearPort();
+  setScene(0); 
+}
 
 }//end class

@@ -13,9 +13,11 @@ ClimbingScene(PApplet pa){ super(pa); }
 //SCENE SETUP
 //----------------------------------------
 void begin()
-{   
+{ 
+  clearPort();
+  
   //video init and setup
-  myMovie = new JMCMovie(parent, "climbing.mov", RGB);
+  myMovie = new JMCMovie(parent, "climbing.mp4", RGB);
   myMovie.play();
   
   //used to center video
@@ -91,7 +93,8 @@ void userInteraction()
 //ADVANCE TO NEXT SCENE - PANORAMIC
 //----------------------------------------
 void mousePress() 
-{  
+{ 
+  clearPort();
   myMovie.dispose();
   setScene(3);
 }

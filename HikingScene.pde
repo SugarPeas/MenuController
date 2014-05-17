@@ -14,9 +14,11 @@ HikingScene(PApplet pa){ super(pa); }
 //SCENE SETUP
 //----------------------------------------
 void begin()
-{  
+{ 
+  clearPort();
+  
   //video init and setup
-  myMovie = new JMCMovie(parent, "hiking.mov", RGB);
+  myMovie = new JMCMovie(parent, "hiking.mp4", RGB);
   myMovie.play();
   
   //used to center video
@@ -90,6 +92,7 @@ void userInteraction()
 //----------------------------------------
 void mousePress() 
 {
+  clearPort();
   myMovie.dispose(); 
   setScene(2);
 }

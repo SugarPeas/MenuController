@@ -90,7 +90,7 @@ void interactiveVideo()
         if(millis() - savedPauseTime > pauseTime){ myMovie.pause(); }
         //slow down the video
         else{
-            if(myMovie.getRate() - 0.05 > 0.2){ myMovie.changeRate(-0.05); }
+            if(myMovie.getRate() - 0.05 > 0.5){ myMovie.changeRate(-0.05); }
         }
         
         //wait for user interaction to trigger next section
@@ -114,7 +114,7 @@ void interactiveVideo()
         }
         //speed video back up
         else{
-            if(myMovie.getRate() + 0.01 < 1.0){ myMovie.changeRate(0.01); }
+            if(myMovie.getRate() + 0.05 < 1.0){ myMovie.changeRate(0.05); }
         }
         
         //restart video if paused
@@ -124,7 +124,7 @@ void interactiveVideo()
         
     //show video frame
     tint(255, movieTransparency);
-    image(myMovie, movieX, movieY);
+    image(myMovie, 0, 0);
     
     
     //fade in progress bar
@@ -174,8 +174,8 @@ void progressBar(String fade)
     stroke(255, progressTransparency);
     strokeWeight(2);
     strokeCap(ROUND);
-    line(myMovie.width-80, 80, myMovie.width-80, displayHeight-80);
-    ellipse(myMovie.width - 80, progressY, 30, 30);
+    line(myMovie.width-900, 80, myMovie.width-900, displayHeight-80);
+    ellipse(myMovie.width - 900, progressY, 30, 30);
 }
 
 
